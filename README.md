@@ -1,5 +1,7 @@
 # kotliteApp
 KotliteApp
 
-Kotlite adalah aplikasi ridesharing yang memungkinkan untuk pengemudi (driver) akan mendapatkan penumpang (rider) yang memiliki route atau jalur yang sama. Aplikasi ini merupakan produk dari Brillante Team (BA21-CAP0176) untuk memenuhi Bangkit Academy 2021 led by Google, Gojek, Tokopedia, and Traveloka Capstone Project.
+Kotlite is not just an ridesharing app, Kotlite is an  app with a strong mission. We belive with this app we could solve mobility and connect people within our beloved country Indonesia, especially in Jakarta. But this simple app do it? This is how Kotlite doit!
+
+....details comingsoon
 
