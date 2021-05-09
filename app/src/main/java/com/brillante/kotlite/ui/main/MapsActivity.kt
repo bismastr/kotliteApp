@@ -1,26 +1,33 @@
-package com.brillante.kotlite
+package com.brillante.kotlite.ui.main
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.location.Location
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.brillante.kotlite.BuildConfig
+import com.brillante.kotlite.R
+import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.libraries.places.api.Places
+import com.google.android.libraries.places.api.model.Place
+import com.google.android.libraries.places.api.model.TypeFilter
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
+
 
 class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private var map: GoogleMap? =null
-    private lateinit var mMap: GoogleMap
+
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -40,9 +47,33 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         val mapFragment = supportFragmentManager
                 .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
-
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        // Initialize the SDK
+        Places.initialize(applicationContext, BuildConfig.API_KEY)
+
+        val autocompleteFragment =
+            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                    as AutocompleteSupportFragment
+
+        autocompleteFragment.setTypeFilter(TypeFilter.ADDRESS)
+        autocompleteFragment.setCountries("ID")
+
+        // Specify the types of place data to return.
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+
+        // Set up a PlaceSelectionListener to handle the response.
+        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+            override fun onPlaceSelected(place: Place) {
+                // TODO: Get info about the selected place.
+                Log.i("TAG", "Place: ${place.name}, ${place.id}")
+            }
+
+            override fun onError(status: Status) {
+                // TODO: Handle the error.
+                Log.i("TAG", "An error occurred: $status")
+            }
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -58,6 +89,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Get the current location of the device and set the position of the map.
         getDeviceLocation()
+
+
     }
 
     private fun getDeviceLocation() {
@@ -73,15 +106,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         // Set the map's camera position to the current location of the device.
                         lastKnownLocation = task.result
                         if (lastKnownLocation != null) {
-                            map?.moveCamera(CameraUpdateFactory.newLatLngZoom(
-                                    LatLng(lastKnownLocation!!.latitude,
-                                            lastKnownLocation!!.longitude), DEFAULT_ZOOM.toFloat()))
+                            map?.moveCamera(
+                                CameraUpdateFactory.newLatLngZoom(
+                                    LatLng(
+                                        lastKnownLocation!!.latitude,
+                                        lastKnownLocation!!.longitude
+                                    ), DEFAULT_ZOOM.toFloat()
+                                )
+                            )
                         }
                     } else {
                         Log.d(TAG, "Current location is null. Using defaults.")
                         Log.e(TAG, "Exception: %s", task.exception)
-                        map?.moveCamera(CameraUpdateFactory
-                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat()))
+                        map?.moveCamera(
+                            CameraUpdateFactory
+                                .newLatLngZoom(defaultLocation, DEFAULT_ZOOM.toFloat())
+                        )
                         map?.uiSettings?.isMyLocationButtonEnabled = false
                     }
                 }
@@ -91,16 +131,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int,
-                                            permissions: Array<String>,
-                                            grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         locationPermissionGranted = false
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
 
                 // If request is cancelled, the result arrays are empty.
                 if (grantResults.isNotEmpty() &&
-                        grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED
+                ) {
                     locationPermissionGranted = true
                 }
             }
@@ -114,13 +157,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
          * device. The result of the permission request is handled by a callback,
          * onRequestPermissionsResult.
          */
-        if (ContextCompat.checkSelfPermission(this.applicationContext,
-                        Manifest.permission.ACCESS_FINE_LOCATION)
+        if (ContextCompat.checkSelfPermission(
+                this.applicationContext,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            )
                 == PackageManager.PERMISSION_GRANTED) {
             locationPermissionGranted = true
         } else {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-                    PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION)
+            ActivityCompat.requestPermissions(
+                this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
+                PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION
+            )
         }
     }
 
