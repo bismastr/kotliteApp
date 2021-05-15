@@ -12,29 +12,45 @@
         android:layout_height="match_parent"
         tools:context=".ui.main.MapsActivity" />
 
-<!--    <com.arlib.floatingsearchview.FloatingSearchView-->
-<!--        android:id="@+id/floating_search_view"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_alignParentBottom="true"-->
-<!--        app:floatingSearch_close_search_on_keyboard_dismiss="true"-->
-<!--        app:floatingSearch_leftActionMode="showSearch"-->
-<!--        app:floatingSearch_searchBarMarginTop="20dp"-->
-<!--        app:floatingSearch_searchHint="Where you wanna go"-->
-<!--        app:floatingSearch_searchBarMarginLeft="20dp"-->
-<!--        app:floatingSearch_searchBarMarginRight="20dp"-->
-<!--        app:floatingSearch_showSearchKey="false"-->
-<!--        app:floatingSearch_suggestionsListAnimDuration="250" />-->
+    <ImageView
+        android:id="@+id/img_marker"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/ic_marker"
+        android:visibility="gone"
+        android:contentDescription="@string/app_name" />
 
-    <fragment android:id="@+id/autocomplete_fragment"
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_setlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/set_location"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-        />
+        android:visibility="gone"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_autocomplete"
+        android:layout_width="350dp"
+        app:cardCornerRadius="16dp"
+        android:layout_centerHorizontal="true"
+        android:layout_height="60dp"
+        android:layout_margin="16dp">
+
+        <fragment
+            android:id="@+id/autocomplete_fragment"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp" />
+    </androidx.cardview.widget.CardView>
+
 
 </RelativeLayout>
 
