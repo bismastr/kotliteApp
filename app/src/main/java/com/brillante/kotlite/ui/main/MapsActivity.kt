@@ -45,7 +45,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
 
-    private var destinationLocation: Place? = null
+    private var destinationLocation: LatLng? = null
     private var pickupLocation: LatLng? = null
 
     companion object {
@@ -95,12 +95,12 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
             autocompleteFragment.setCountries("ID")
 
             // Specify the types of place data to return.
-            autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+            autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
 
             // Set up a PlaceSelectionListener to handle the response.
             autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
                 override fun onPlaceSelected(place: Place) {
-                    destinationLocation = place
+                    destinationLocation = place.latLng
                     Log.i("TAG", "Place: ${place.name}, ${place.id}")
                     isCanceled = false
                     onCameraIdle()
