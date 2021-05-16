@@ -5,11 +5,14 @@ import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.R
+import com.brillante.kotlite.databinding.ActivityMapsBinding
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -25,9 +28,11 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
-    private var map: GoogleMap? =null
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCameraIdleListener{
+    private var map: GoogleMap? = null
 
+    private var isCanceled: Boolean = true
+    private lateinit var binding: ActivityMapsBinding
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -40,57 +45,75 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
 
+    private var destinationLocation: LatLng? = null
+    private var pickupLocation: LatLng? = null
+
+    companion object {
+        private val TAG = MapsActivity::class.java.simpleName
+        private const val DEFAULT_ZOOM = 20
+        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+    }
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_maps)
+        binding = ActivityMapsBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
-                .findFragmentById(R.id.map) as SupportMapFragment
+            .findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
         // Construct a FusedLocationProviderClient.
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
 
-        val autocompleteFragment =
-            supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
-                    as AutocompleteSupportFragment
 
-        autocompleteFragment.setTypeFilter(TypeFilter.ADDRESS)
-        autocompleteFragment.setCountries("ID")
-
-        // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
-
-        // Set up a PlaceSelectionListener to handle the response.
-        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-            override fun onPlaceSelected(place: Place) {
-                // TODO: Get info about the selected place.
-                Log.i("TAG", "Place: ${place.name}, ${place.id}")
-            }
-
-            override fun onError(status: Status) {
-                // TODO: Handle the error.
-                Log.i("TAG", "An error occurred: $status")
-            }
-        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.map = googleMap
-
-        // Add a marker in Sydney and move the camera
-        // Prompt the user for permission.
+//         Add a marker in Sydney and move the camera
+//         Prompt the user for permission.
         getLocationPermission()
-
-
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
-
         // Get the current location of the device and set the position of the map.
         getDeviceLocation()
 
+        autoComplete()
+    }
 
+    private fun autoComplete() {
+        if (locationPermissionGranted) {
+            val autocompleteFragment =
+                supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
+                        as AutocompleteSupportFragment
+            autocompleteFragment.setHint("Mau Kemana Hari Ini?")
+            autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
+            autocompleteFragment.setCountries("ID")
+
+            // Specify the types of place data to return.
+            autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
+
+            // Set up a PlaceSelectionListener to handle the response.
+            autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
+                override fun onPlaceSelected(place: Place) {
+                    destinationLocation = place.latLng
+                    Log.i("TAG", "Place: ${place.name}, ${place.id}")
+                    isCanceled = false
+                    onCameraIdle()
+
+                }
+
+                override fun onError(status: Status) {
+                    // TODO: Handle the error.
+                    Log.i("TAG", "An error occurred: $status")
+                }
+            })
+
+        }
     }
 
     private fun getDeviceLocation() {
@@ -161,7 +184,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
                 this.applicationContext,
                 Manifest.permission.ACCESS_FINE_LOCATION
             )
-                == PackageManager.PERMISSION_GRANTED) {
+            == PackageManager.PERMISSION_GRANTED
+        ) {
             locationPermissionGranted = true
         } else {
             ActivityCompat.requestPermissions(
@@ -190,18 +214,28 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
         }
     }
 
-    companion object {
-        private val TAG = MapsActivity::class.java.simpleName
-        private const val DEFAULT_ZOOM = 20
-        private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
 
-        // Keys for storing activity state.
-        // [START maps_current_place_state_keys]
-        private const val KEY_CAMERA_POSITION = "camera_position"
-        private const val KEY_LOCATION = "location"
-        // [END maps_current_place_state_keys]
 
-        // Used for selecting the current place.
-        private const val M_MAX_ENTRIES = 5
+
+    override fun onCameraIdle() {
+        val center: LatLng? = map?.cameraPosition?.target
+        if (!isCanceled){
+            map?.setOnCameraIdleListener(this@MapsActivity)
+            Toast.makeText(applicationContext, center.toString(), Toast.LENGTH_LONG).show()
+            binding.imgMarker.visibility = View.VISIBLE
+            binding.btnSetlocation.visibility = View.VISIBLE
+
+        } else return
+
+        binding.btnSetlocation.setOnClickListener {
+            isCanceled = true
+            binding.imgMarker.visibility = View.GONE
+            binding.btnSetlocation.visibility = View.GONE
+            pickupLocation = center
+            Log.d("pickup location", pickupLocation.toString())
+            Log.d("tujuan", destinationLocation.toString())
+        }
+
+
     }
 }
