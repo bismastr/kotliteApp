@@ -1,6 +1,7 @@
 package com.brillante.kotlite.ui.main
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -69,7 +70,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
 
+        binding.navView.selectedItemId = R.id.navigation_home
 
+        binding.navView.setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                R.id.navigation_home -> true
+                R.id.navigation_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    overridePendingTransition(0, 0)
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

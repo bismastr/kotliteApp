@@ -1,5 +1,29 @@
 <resources>
     <string name="app_name">kotlite</string>
     <string name="title_activity_maps">Map</string>
+    <string name="welcome">Welcome To Kotlite</string>
+    <string name="title_home">Home</string>
+    <string name="title_profile">Profile</string>
     <string name="set_location">Set location</string>
+    <string name="kotlite">Kotlite</string>
+    <string name="login">Login</string>
+    <string name="e_mail">E-mail</string>
+    <string name="password">Password</string>
+    <string name="log_in">SIGN-UP</string>
+    <string name="don_t_have_an_account">Don\'t have an account ?</string>
+    <string name="register">Register</string>
+    <string name="username">Username</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="already_have_an_account">Already have an account ?</string>
+    <string name="choose_role">Choose Your Role</string>
+    <string name="driver">Driver</string>
+    <string name="passanger">Passanger</string>
+    <string name="welcome_user">Hallo Driver</string>
+    <string name="personal_data">Personal Data</string>
+    <string name="name_driver">Driver Name</string>
+    <string name="username_driver">Username Driver</string>
+    <string name="email_driver">Email Driver</string>
+    <string name="no_driver">Handphone Number Driver</string>
+    <string name="logout">LOG-OUT</string>
 </resources>
