@@ -25,7 +25,6 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
@@ -125,6 +124,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
                     destinationLocation = place.latLng
                     Log.i("TAG", "Place: ${place.name}, ${place.id}")
                     isCanceled = false
+                    getDeviceLocation()
                     onCameraIdle()
 
                 }
@@ -249,7 +249,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
 
     override fun onCameraIdle() {
         val center: LatLng? = map?.cameraPosition?.target
+
         if (!isCanceled){
+
             map?.setOnCameraIdleListener(this@MapsActivity)
             Toast.makeText(applicationContext, center.toString(), Toast.LENGTH_LONG).show()
             binding.imgMarker.visibility = View.VISIBLE
