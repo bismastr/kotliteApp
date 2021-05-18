@@ -1,18 +1,15 @@
-package com.brillante.kotlite.ui.main
+package com.brillante.kotlite.ui.login
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.databinding.ActivityLoginBinding
-import com.brillante.kotlite.model.LoginRequest
-import com.brillante.kotlite.network.Retrofit
 import com.brillante.kotlite.preferences.SessionManager
-import com.brillante.kotlite.ui.responses.LoginResponse
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.brillante.kotlite.ui.register.RegisterActivity
+import com.brillante.kotlite.ui.role.RoleActivity
+import com.brillante.kotlite.viewmodel.ViewModelFactory
 
 
 class LoginActivity : AppCompatActivity() {
@@ -20,6 +17,8 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var sessionManager: SessionManager
+    //viewModel
+    private lateinit var loginViewModel: LoginViewModel
 
     companion object {
         private val TAG = LoginActivity::class.java.simpleName
@@ -29,6 +28,9 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //viewmodel
+        val factory = ViewModelFactory.getInstance()
+        loginViewModel = ViewModelProvider(this, factory)[LoginViewModel::class.java]
 
         binding.tvRegister.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
@@ -66,27 +68,10 @@ class LoginActivity : AppCompatActivity() {
             ). show()
         }
 
-        Retrofit.apiRequest.login(LoginRequest(username = username, password = password)).enqueue(object : Callback<LoginResponse> {
-
-            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
-
-                if (response.isSuccessful) {
-                    response.body()?.let { sessionManager.saveAuthToken(it.access) }
-                    startActivity(Intent(this@LoginActivity, RoleActivity::class.java))
-                }
-                else {
-                    Log.d(TAG, response.code().toString())
-                }
+        loginViewModel.loginUser(username, password, sessionManager, this).observe(this, {isSucces ->
+            if (isSucces){
+                startActivity(Intent(this@LoginActivity, RoleActivity::class.java))
             }
-
-            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
-                Toast.makeText(
-                    this@LoginActivity,
-                    "Failed To Login",
-                    Toast.LENGTH_SHORT
-                ). show()
-            }
-
         })
     }
 }

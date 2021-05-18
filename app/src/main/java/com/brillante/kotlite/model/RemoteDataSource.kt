@@ -1,10 +1,13 @@
 package com.brillante.kotlite.model
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import com.brillante.kotlite.api.ApiConfig
-import com.brillante.kotlite.api.ApiService
 import com.brillante.kotlite.model.direction.DirectionResponses
-import com.google.android.gms.maps.model.LatLng
+import com.brillante.kotlite.model.login.LoginRequest
+import com.brillante.kotlite.model.login.LoginResponse
+import com.brillante.kotlite.preferences.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -40,7 +43,41 @@ class RemoteDataSource {
         })
     }
 
+    fun loginUser(
+        username: String,
+        password: String,
+        sessionManager: SessionManager,
+        context: Context,
+        callback: LoginCallback
+    ) {
+        val client = ApiConfig.getWebServices().login(LoginRequest(username, password))
+        client.enqueue(object : Callback<LoginResponse> {
+            override fun onResponse(call: Call<LoginResponse>, response: Response<LoginResponse>) {
+                if (response.isSuccessful) {
+                    response.body()?.let { sessionManager.saveAuthToken(it.access) }
+                    callback.onLoginReceived(true)
+
+                } else Log.d("TAG", response.code().toString())
+
+            }
+
+            override fun onFailure(call: Call<LoginResponse>, t: Throwable) {
+                callback.onLoginReceived(false)
+                Toast.makeText(
+                    context,
+                    "Failed To Login",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+    }
+
     interface DirectionCallback {
         fun onDirectionReceived(response: DirectionResponses?)
+    }
+
+    interface LoginCallback {
+        fun onLoginReceived(isSucces: Boolean)
     }
 }

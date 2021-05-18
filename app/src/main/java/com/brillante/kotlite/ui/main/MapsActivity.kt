@@ -16,6 +16,7 @@ import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.ActivityMapsBinding
 import com.brillante.kotlite.ui.MapViewModel
+import com.brillante.kotlite.ui.profile.ProfileActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -67,8 +68,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         val view = binding.root
         setContentView(view)
         //ViewModel
-        val factory = ViewModelFactory.getInstance(this)
+        val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -77,7 +79,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
-
         binding.navView.selectedItemId = R.id.navigation_home
 
         binding.navView.setOnNavigationItemSelectedListener {

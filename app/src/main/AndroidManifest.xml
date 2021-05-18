@@ -18,10 +18,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Kotlite">
-        <activity android:name=".ui.main.ProfileActivity"/>
-        <activity android:name=".ui.main.RoleActivity" />
-        <activity android:name=".ui.main.RegisterActivity" />
-        <activity android:name=".ui.main.LoginActivity">
+        <activity android:name=".ui.profile.ProfileActivity"/>
+        <activity android:name=".ui.role.RoleActivity" />
+        <activity android:name=".ui.register.RegisterActivity" />
+        <activity android:name=".ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +40,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value= 'AIzaSyC1X5V6HCyJvTfOAuIppy-WybmDRTva1Nw' />
+            android:value= "${MAPS_API_KEY}" />
 
         <activity
             android:name=".ui.main.MapsActivity"

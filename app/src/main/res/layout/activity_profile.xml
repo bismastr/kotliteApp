@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".ui.main.ProfileActivity">
+    tools:context=".ui.profile.ProfileActivity">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_personal_data"

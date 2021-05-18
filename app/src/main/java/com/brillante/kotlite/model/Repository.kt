@@ -1,9 +1,13 @@
 package com.brillante.kotlite.model
 
+import android.content.Context
 import android.graphics.Color
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.model.direction.DirectionResponses
+import com.brillante.kotlite.preferences.SessionManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
@@ -58,6 +62,22 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
             }
 
         })
+    }
+
+    override fun login(
+        username: String,
+        password: String,
+        sessionManager: SessionManager,
+        context: Context
+    ): LiveData<Boolean> {
+        val isLogin = MutableLiveData<Boolean>()
+        remoteDataSource.loginUser(username, password, sessionManager, context, object : RemoteDataSource.LoginCallback{
+            override fun onLoginReceived(isSucces: Boolean) {
+                isLogin.postValue(isSucces)
+            }
+
+        })
+        return isLogin
     }
 
 

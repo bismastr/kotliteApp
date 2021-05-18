@@ -1,4 +1,4 @@
-package com.brillante.kotlite.ui.responses
+package com.brillante.kotlite.model.login
 
 import com.google.gson.annotations.SerializedName
 

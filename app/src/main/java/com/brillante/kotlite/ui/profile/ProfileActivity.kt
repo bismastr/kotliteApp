@@ -1,10 +1,11 @@
-package com.brillante.kotlite.ui.main
+package com.brillante.kotlite.ui.profile
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.ActivityProfileBinding
+import com.brillante.kotlite.ui.main.MapsActivity
 
 class ProfileActivity : AppCompatActivity() {
 

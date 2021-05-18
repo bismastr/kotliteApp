@@ -20,5 +20,19 @@ class ApiConfig {
                 .build()
             return retrofit.create(ApiService::class.java)
         }
+
+        fun getWebServices(): ApiService {
+            val loggingInterceptor =
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)
+            val client = OkHttpClient.Builder()
+                .addInterceptor(loggingInterceptor)
+                .build()
+            val retrofit = Retrofit.Builder()
+                .baseUrl("https://proud-lamp-312513.et.r.appspot.com")
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(client)
+                .build()
+            return retrofit.create(ApiService::class.java)
+        }
     }
 }

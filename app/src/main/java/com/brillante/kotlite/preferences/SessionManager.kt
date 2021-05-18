@@ -2,6 +2,7 @@ package com.brillante.kotlite.preferences
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import com.brillante.kotlite.R
 
 class SessionManager (context: Context) {
@@ -24,6 +25,7 @@ class SessionManager (context: Context) {
      * Function to fetch auth token
      */
     fun fetchAuthToken(): String? {
+        Log.d("TOKEN", prefs.getString(USER_TOKEN, null).toString())
         return prefs.getString(USER_TOKEN, null)
     }
 }
