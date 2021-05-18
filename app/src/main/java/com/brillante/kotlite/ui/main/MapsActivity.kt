@@ -11,9 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.ActivityMapsBinding
+import com.brillante.kotlite.ui.MapViewModel
+import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -22,6 +25,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.LatLngBounds
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.api.model.TypeFilter
@@ -48,6 +52,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
 
     private var destinationLocation: LatLng? = null
     private var pickupLocation: LatLng? = null
+    //ViewModel
+    private lateinit var mapViewModel: MapViewModel
 
     companion object {
         private val TAG = MapsActivity::class.java.simpleName
@@ -61,6 +67,9 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         binding = ActivityMapsBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+        //ViewModel
+        val factory = ViewModelFactory.getInstance(this)
+        mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -172,6 +181,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         permissions: Array<String>,
         grantResults: IntArray
     ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         locationPermissionGranted = false
         when (requestCode) {
             PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION -> {
@@ -227,8 +237,15 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         }
     }
 
+    private fun showDirection(from: LatLng?, to: LatLng?, map: GoogleMap?){
+        if (map !== null){
+            val fromString = from?.latitude.toString() + "," + from?.longitude.toString()
+            val toString = to?.latitude.toString() + "," + to?.longitude.toString()
+            mapViewModel.getDirection(fromString, toString, map)
 
+        }
 
+    }
 
     override fun onCameraIdle() {
         val center: LatLng? = map?.cameraPosition?.target
@@ -247,6 +264,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
             pickupLocation = center
             Log.d("pickup location", pickupLocation.toString())
             Log.d("tujuan", destinationLocation.toString())
+            showDirection(pickupLocation, destinationLocation, map)
         }
 
 

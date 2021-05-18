@@ -78,6 +78,7 @@
     </androidx.cardview.widget.CardView>
 
 
+
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_container_map"
         android:layout_width="match_parent"
@@ -89,27 +90,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_welcome">
-
-        <fragment
-            android:id="@+id/map"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.main.MapsActivity" />
+            android:layout_height="match_parent">
+
+            <fragment
+                android:id="@+id/map"
+                android:name="com.google.android.gms.maps.SupportMapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".ui.main.MapsActivity" />
+
+            <ImageView
+                android:id="@+id/img_marker"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/app_name"
+                android:src="@drawable/ic_marker"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </RelativeLayout>
+
+
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
-        android:id="@+id/img_marker"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_marker"
-        android:visibility="gone"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+
+
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_setlocation"
