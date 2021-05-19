@@ -57,7 +57,8 @@ class RemoteDataSource {
                     response.body()?.let { sessionManager.saveAuthToken(it.access) }
                     callback.onLoginReceived(true)
 
-                } else Log.d("TAG", response.code().toString())
+                } else callback.onLoginReceived(false)
+                    Log.d("LOGIN", response.code().toString())
 
             }
 

@@ -15,8 +15,6 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        buildConfigField("String", "API_KEY", '"AIzaSyC1X5V6HCyJvTfOAuIppy-WybmDRTva1Nw"')
-        buildConfigField("String", "MAPS_API_KEY", '"AIzaSyC9rKUqSrytIsC7QrPExD8v7oLNB3eOr5k"')
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -2,6 +2,7 @@ package com.brillante.kotlite.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -17,12 +18,9 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
 
     private lateinit var sessionManager: SessionManager
+
     //viewModel
     private lateinit var loginViewModel: LoginViewModel
-
-    companion object {
-        private val TAG = LoginActivity::class.java.simpleName
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,8 +43,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
 
-        val username = binding.etUsername.text.toString().trim() {it <= ' '}
-        val password = binding.etPassword.text.toString().trim {it <= ' '}
+        val username = binding.etUsername.text.toString().trim() { it <= ' ' }
+        val password = binding.etPassword.text.toString().trim { it <= ' ' }
 
         if (username.isEmpty()) {
             binding.etUsername.error = "Email Is Required"
@@ -55,7 +53,7 @@ class LoginActivity : AppCompatActivity() {
                 this@LoginActivity,
                 "Please enter your Username",
                 Toast.LENGTH_SHORT
-            ). show()
+            ).show()
         }
 
         if (password.isEmpty()) {
@@ -65,13 +63,24 @@ class LoginActivity : AppCompatActivity() {
                 this@LoginActivity,
                 "Please enter your Password",
                 Toast.LENGTH_SHORT
-            ). show()
+            ).show()
         }
 
-        loginViewModel.loginUser(username, password, sessionManager, this).observe(this, {isSucces ->
-            if (isSucces){
-                startActivity(Intent(this@LoginActivity, RoleActivity::class.java))
-            }
-        })
+        loginViewModel.loginUser(username, password, sessionManager, this)
+            .observe(this, { isSuccess ->
+                if (isSuccess) {
+                    startActivity(Intent(this@LoginActivity, RoleActivity::class.java))
+                } else{
+                    binding.etUsername.error = ""
+                    binding.etPassword.error = ""
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "Failed To Login",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                }
+
+            })
     }
 }

@@ -17,7 +17,7 @@ import com.google.maps.android.PolyUtil
 
 class Repository private constructor(private val remoteDataSource: RemoteDataSource) : DataSource {
     companion object {
-        const val KEY = BuildConfig.MAPS_API_KEY
+        const val KEY = BuildConfig.API_KEY
 
         @Volatile
         private var instance: Repository? = null
