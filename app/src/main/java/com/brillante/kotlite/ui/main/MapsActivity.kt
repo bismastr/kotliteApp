@@ -70,7 +70,11 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         //ViewModel
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
-
+        //bottomsheet
+        val bottomSheetFragment = BottomSheetFragment()
+        binding.btnSchedule.setOnClickListener {
+            bottomSheetFragment.show(supportFragmentManager, "ScheduleBottomSheet")
+        }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment

@@ -26,4 +26,5 @@
     <string name="email_driver">Email Driver</string>
     <string name="no_driver">Handphone Number Driver</string>
     <string name="logout">LOG-OUT</string>
+    <string name="schedule_your_ride">Schedule Your Ride</string>
 </resources>

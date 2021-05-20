@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/btn_time"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="48dp"
+        android:text="Time Picker"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="@+id/btn_date"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="@+id/btn_date"
+        app:layout_constraintTop_toBottomOf="@+id/btn_date" />
+
+    <Button
+        android:id="@+id/btn_date"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="48dp"
+        android:layout_marginEnd="68dp"
+        android:text="Date Picker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/app_name"
+        app:layout_constraintEnd_toEndOf="@+id/btn_time"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="@+id/btn_time"
+        app:layout_constraintTop_toBottomOf="@+id/btn_time" />
+</androidx.constraintlayout.widget.ConstraintLayout>

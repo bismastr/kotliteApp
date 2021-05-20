@@ -5,17 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background">
-
+    <!--    Auto Complete-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
         app:cardCornerRadius="20dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
@@ -27,39 +27,40 @@
                 android:id="@+id/tv_welcome"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
                 android:layout_alignParentStart="true"
-                android:text="@string/welcome"
+                android:layout_marginStart="20dp"
                 android:fontFamily="@font/comfortaa_bold"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:text="@string/welcome"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
 
             <TextView
                 android:id="@+id/tv_welcome_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/tv_welcome"
-                android:layout_marginTop="5dp"
                 android:layout_marginStart="20dp"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat_light"
-                android:textSize="15sp"
-                android:text="@string/welcome_user"/>
+                android:text="@string/welcome_user"
+                android:textSize="15sp" />
+
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_toEndOf="@+id/tv_welcome_user"
                 android:layout_below="@+id/tv_welcome"
                 android:layout_marginStart="5dp"
-                android:src="@drawable/smile_icon"/>
+                android:layout_toEndOf="@+id/tv_welcome_user"
+                android:src="@drawable/smile_icon" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_autocomplete"
                 android:layout_width="350dp"
-                app:cardCornerRadius="16dp"
-                android:layout_centerHorizontal="true"
                 android:layout_height="60dp"
+                android:layout_below="@+id/tv_welcome_user"
+                android:layout_centerHorizontal="true"
                 android:layout_margin="16dp"
-                android:layout_below="@+id/tv_welcome_user">
+                app:cardCornerRadius="16dp">
 
                 <fragment
                     android:id="@+id/autocomplete_fragment"
@@ -77,19 +78,19 @@
 
     </androidx.cardview.widget.CardView>
 
-
-
+    <!--    Map -->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_container_map"
         android:layout_width="match_parent"
         android:layout_height="450dp"
         android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
         android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
         app:cardCornerRadius="20dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_welcome">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -118,35 +119,44 @@
         </RelativeLayout>
 
 
-
     </androidx.cardview.widget.CardView>
-
-
-
-
+    <!--    Set Location-->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_setlocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/set_location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_container_map"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        android:visibility="gone"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_container_map" />
+
+    <!--Bottom Nav-->
+    <Button
+        android:id="@+id/btn_schedule"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="440dp"
+        android:text="@string/schedule_your_ride"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/cv_container_map"
+        app:layout_constraintVertical_bias="1.0" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/nav_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:menu="@menu/bottom_menu_nav"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="5dp"
         android:background="@drawable/view_map"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_menu_nav" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

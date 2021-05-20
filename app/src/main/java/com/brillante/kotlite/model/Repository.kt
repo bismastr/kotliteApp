@@ -44,6 +44,7 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                         .width(8f)
                         .color(Color.BLUE))
 
+
                     val boundsBuilder = LatLngBounds.builder()
                     for (latLngPoint: LatLng in polyline.points) {
                         boundsBuilder.include(latLngPoint)
