@@ -27,4 +27,7 @@
     <string name="no_driver">Handphone Number Driver</string>
     <string name="logout">LOG-OUT</string>
     <string name="schedule_your_ride">Schedule Your Ride</string>
+    <string name="date_picker">Date Picker</string>
+    <string name="time_picker">Time Picker</string>
+    <string name="book_ride">Book Ride</string>
 </resources>

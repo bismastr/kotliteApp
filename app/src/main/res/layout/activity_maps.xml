@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background">
+    android:background="@color/white">
     <!--    Auto Complete-->
     <androidx.cardview.widget.CardView
         android:id="@+id/cv_welcome"
@@ -127,7 +127,7 @@
         android:layout_height="wrap_content"
         android:text="@string/set_location"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintBottom_toTopOf="@+id/btn_schedule"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_container_map" />
@@ -137,26 +137,14 @@
         android:id="@+id/btn_schedule"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="440dp"
         android:text="@string/schedule_your_ride"
-        app:layout_constraintBottom_toTopOf="@+id/nav_view"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/cv_container_map"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/nav_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
-        android:background="@drawable/view_map"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_menu_nav" />
+        app:layout_constraintTop_toBottomOf="@+id/cv_container_map"
+        app:layout_constraintVertical_bias="0.884" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

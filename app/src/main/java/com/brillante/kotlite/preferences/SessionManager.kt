@@ -25,7 +25,6 @@ class SessionManager (context: Context) {
      * Function to fetch auth token
      */
     fun fetchAuthToken(): String? {
-        Log.d("TOKEN", prefs.getString(USER_TOKEN, null).toString())
         return prefs.getString(USER_TOKEN, null)
     }
 }

@@ -1,7 +1,6 @@
 package com.brillante.kotlite.ui.main
 
 import android.Manifest
-import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -15,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.ActivityMapsBinding
+import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
-import com.brillante.kotlite.ui.profile.ProfileActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -33,23 +32,19 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCameraIdleListener{
+class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCameraIdleListener {
     private var map: GoogleMap? = null
-
     private var isCanceled: Boolean = true
     private lateinit var binding: ActivityMapsBinding
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-
     // A default location
     // not granted.
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var locationPermissionGranted = false
-
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
-
     private var destinationLocation: LatLng? = null
     private var pickupLocation: LatLng? = null
     //ViewModel
@@ -71,7 +66,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
         //bottomsheet
-        val bottomSheetFragment = BottomSheetFragment()
+        val bottomSheetFragment = BottomSheetFragment(pickupLocation,destinationLocation)
         binding.btnSchedule.setOnClickListener {
             bottomSheetFragment.show(supportFragmentManager, "ScheduleBottomSheet")
         }
@@ -83,19 +78,19 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
-        binding.navView.selectedItemId = R.id.navigation_home
-
-        binding.navView.setOnNavigationItemSelectedListener {
-            when(it.itemId) {
-                R.id.navigation_home -> true
-                R.id.navigation_profile -> {
-                    startActivity(Intent(this, ProfileActivity::class.java))
-                    overridePendingTransition(0, 0)
-                    true
-                }
-                else -> false
-            }
-        }
+//        binding.navView.selectedItemId = R.id.navigation_home
+//
+//        binding.navView.setOnNavigationItemSelectedListener {
+//            when(it.itemId) {
+//                R.id.navigation_home -> true
+//                R.id.navigation_profile -> {
+//                    startActivity(Intent(this, ProfileActivity::class.java))
+//                    overridePendingTransition(0, 0)
+//                    true
+//                }
+//                else -> false
+//            }
+//        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -121,7 +116,13 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
             autocompleteFragment.setCountries("ID")
 
             // Specify the types of place data to return.
-            autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
+            autocompleteFragment.setPlaceFields(
+                listOf(
+                    Place.Field.ID,
+                    Place.Field.NAME,
+                    Place.Field.LAT_LNG
+                )
+            )
 
             // Set up a PlaceSelectionListener to handle the response.
             autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
@@ -242,8 +243,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
         }
     }
 
-    private fun showDirection(from: LatLng?, to: LatLng?, map: GoogleMap?){
-        if (map !== null){
+    private fun showDirection(from: LatLng?, to: LatLng?, map: GoogleMap?) {
+        if (map !== null) {
             val fromString = from?.latitude.toString() + "," + from?.longitude.toString()
             val toString = to?.latitude.toString() + "," + to?.longitude.toString()
             mapViewModel.getDirection(fromString, toString, map)
@@ -255,7 +256,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
     override fun onCameraIdle() {
         val center: LatLng? = map?.cameraPosition?.target
 
-        if (!isCanceled){
+        if (!isCanceled) {
 
             map?.setOnCameraIdleListener(this@MapsActivity)
             Toast.makeText(applicationContext, center.toString(), Toast.LENGTH_LONG).show()
@@ -269,9 +270,22 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback , GoogleMap.OnCamer
             binding.imgMarker.visibility = View.GONE
             binding.btnSetlocation.visibility = View.GONE
             pickupLocation = center
-            Log.d("pickup location", pickupLocation.toString())
-            Log.d("tujuan", destinationLocation.toString())
             showDirection(pickupLocation, destinationLocation, map)
+
+//            mapViewModel.createOrder(
+//                pickupLocation,
+//                destinationLocation,
+//                "23:00",
+//                4,
+//                "Subaru",
+//                this,
+//                token.toString()
+//            ).observe(this, { isSuccess ->
+//                if (isSuccess){
+//                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+//                } else
+//                    Toast.makeText(this, "Error Post", Toast.LENGTH_LONG).show()
+//            })
         }
 
 

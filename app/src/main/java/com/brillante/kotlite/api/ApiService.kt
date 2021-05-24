@@ -3,11 +3,9 @@ package com.brillante.kotlite.api
 import com.brillante.kotlite.model.login.LoginRequest
 import com.brillante.kotlite.model.direction.DirectionResponses
 import com.brillante.kotlite.model.login.LoginResponse
+import com.brillante.kotlite.model.order.OrderRequest
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface ApiService {
 
@@ -20,5 +18,8 @@ interface ApiService {
 
     @POST("/users/login/")
     fun login(@Body request: LoginRequest): Call<LoginResponse>
+
+    @POST("/drivers/createorder/")
+    fun createOrder(@Body request: OrderRequest, @Header("Authorization") authHeader: String): Call<OrderRequest>
 
 }

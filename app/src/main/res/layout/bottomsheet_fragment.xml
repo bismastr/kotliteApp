@@ -8,31 +8,44 @@
     <Button
         android:id="@+id/btn_time"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="64dp"
         android:layout_marginTop="48dp"
-        android:text="Time Picker"
+        android:text="@string/time_picker"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/teal_700"/>
 
     <TextView
         android:id="@+id/tv_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/app_name"
+        android:layout_marginTop="20dp"
+        android:text="Hari Apa?"
         app:layout_constraintEnd_toEndOf="@+id/btn_date"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.41"
         app:layout_constraintStart_toStartOf="@+id/btn_date"
         app:layout_constraintTop_toBottomOf="@+id/btn_date" />
 
     <Button
         android:id="@+id/btn_date"
         android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
-        android:layout_marginEnd="68dp"
-        android:text="Date Picker"
+        android:layout_marginEnd="64dp"
+        android:backgroundTint="@color/teal_700"
+        android:text="@string/date_picker"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_order"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="164dp"
+        android:layout_marginEnd="148dp"
+        android:backgroundTint="@color/purple_500"
+        android:text="@string/book_ride"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -41,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="@string/app_name"
+        android:text="Berangkat Jam Berapa?"
         app:layout_constraintEnd_toEndOf="@+id/btn_time"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="@+id/btn_time"

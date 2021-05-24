@@ -21,6 +21,7 @@ class ApiConfig {
             return retrofit.create(ApiService::class.java)
         }
 
+
         fun getWebServices(): ApiService {
             val loggingInterceptor =
                 HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.NONE)

@@ -36,13 +36,18 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                 if (response?.status != "REQUEST_DENIED") {
 
                     Log.d("SHAPE", response.toString())
-
+                    val distance = response?.routes?.get(0)?.legs?.get(0)?.distance
+                    Log.d("SHAPE", distance.toString())
+                    val duration = response?.routes?.get(0)?.legs?.get(0)?.duration
+                    Log.d("DURATION", duration.toString())
                     val shape = response?.routes?.get(0)?.overviewPolyline?.points
                     map.clear()
-                    val polyline = map.addPolyline(PolylineOptions()
-                        .addAll(PolyUtil.decode(shape))
-                        .width(8f)
-                        .color(Color.BLUE))
+                    val polyline = map.addPolyline(
+                        PolylineOptions()
+                            .addAll(PolyUtil.decode(shape))
+                            .width(8f)
+                            .color(Color.BLUE)
+                    )
 
 
                     val boundsBuilder = LatLngBounds.builder()
@@ -72,13 +77,56 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         context: Context
     ): LiveData<Boolean> {
         val isLogin = MutableLiveData<Boolean>()
-        remoteDataSource.loginUser(username, password, sessionManager, context, object : RemoteDataSource.LoginCallback{
-            override fun onLoginReceived(isSucces: Boolean) {
-                isLogin.postValue(isSucces)
-            }
+        remoteDataSource.loginUser(
+            username,
+            password,
+            sessionManager,
+            context,
+            object : RemoteDataSource.LoginCallback {
+                override fun onLoginReceived(isSucces: Boolean) {
+                    isLogin.postValue(isSucces)
+                }
 
-        })
+            })
         return isLogin
+    }
+
+    override fun createOrder(
+        latLngStart: LatLng?,
+        latLngEnd: LatLng?,
+        time: String,
+        capacity: Int,
+        carType: String,
+        context: Context,
+        authHeader: String,
+    ): LiveData<Boolean> {
+        val isCreated = MutableLiveData<Boolean>()
+        if (latLngEnd !== null && latLngStart !== null) {
+            val longStart: String = latLngStart.longitude.toString()
+            val latStart: String = latLngStart.latitude.toString()
+            val longEnd: String = latLngEnd.longitude.toString()
+            val latEnd: String = latLngEnd.latitude.toString()
+
+            remoteDataSource.createOrder(
+                latStart,
+                longStart,
+                latEnd,
+                longEnd,
+                time,
+                capacity,
+                carType,
+                context,
+                object : RemoteDataSource.OrderCallback {
+                    override fun onOrderReceived(isSucces: Boolean) {
+                        isCreated.postValue(isSucces)
+                    }
+
+                }, "Bearer " + authHeader
+            )
+            return isCreated
+        } else isCreated.postValue(false)
+
+        return isCreated
     }
 
 

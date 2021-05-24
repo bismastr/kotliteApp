@@ -7,6 +7,7 @@ import com.brillante.kotlite.api.ApiConfig
 import com.brillante.kotlite.model.direction.DirectionResponses
 import com.brillante.kotlite.model.login.LoginRequest
 import com.brillante.kotlite.model.login.LoginResponse
+import com.brillante.kotlite.model.order.OrderRequest
 import com.brillante.kotlite.preferences.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,7 +59,7 @@ class RemoteDataSource {
                     callback.onLoginReceived(true)
 
                 } else callback.onLoginReceived(false)
-                    Log.d("LOGIN", response.code().toString())
+                Log.d("LOGIN", response.code().toString())
 
             }
 
@@ -66,7 +67,53 @@ class RemoteDataSource {
                 callback.onLoginReceived(false)
                 Toast.makeText(
                     context,
-                    "Failed To Login",
+                    "Something Went Wrong",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+        })
+    }
+
+    fun createOrder(
+        latStart: String,
+        longStart: String,
+        latEnd: String,
+        longEnd: String,
+        time: String,
+        capacity: Int,
+        carType: String,
+        context: Context,
+        callback: OrderCallback,
+        authHeader: String
+    ) {
+        val client = ApiConfig.getWebServices().createOrder(OrderRequest(latStart, longStart, latEnd, longEnd, time, capacity, carType), authHeader)
+        client.enqueue(object : Callback<OrderRequest> {
+            override fun onResponse(call: Call<OrderRequest>, response: Response<OrderRequest>) {
+                Log.d("AUTH", authHeader.toString())
+                if (response.isSuccessful){
+                    callback.onOrderReceived(true)
+                    Toast.makeText(
+                        context,
+                        "Order Success",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        context,
+                        response.code().toString(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    Log.d("ORDER", response.code().toString())
+                }
+
+            }
+
+            override fun onFailure(call: Call<OrderRequest>, t: Throwable) {
+                callback.onOrderReceived(false)
+                Toast.makeText(
+                    context,
+                    "Order Failed",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -80,5 +127,9 @@ class RemoteDataSource {
 
     interface LoginCallback {
         fun onLoginReceived(isSucces: Boolean)
+    }
+
+    interface OrderCallback {
+        fun onOrderReceived(isSucces: Boolean)
     }
 }
