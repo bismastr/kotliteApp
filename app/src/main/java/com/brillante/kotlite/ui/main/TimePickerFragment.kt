@@ -1,5 +1,6 @@
 package com.brillante.kotlite.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
+import com.brillante.kotlite.ui.driver.psgList.PassengerList
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -17,9 +19,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 
-class BottomSheetFragment(
+class TimePickerFragment(
     private val pickupLatLng: LatLng?,
     private val destinationLatLng: LatLng?,
+    private val carType: String?,
+    private val carCapacity: String?,
 
     ) : BottomSheetDialogFragment() {
     private var _binding: BottomsheetFragmentBinding? = null
@@ -45,12 +49,16 @@ class BottomSheetFragment(
         //ViewModel
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
-
+        Log.d("LATLONG", destinationLatLng.toString())
         binding.btnDate.setOnClickListener { openDatePicker() }
 
         binding.btnTime.setOnClickListener { openTimePicker() }
 
-        binding.btnOrder.setOnClickListener { createOrder() }
+        binding.btnOrder.setOnClickListener {
+            if (carCapacity != null && carType != null) {
+                createOrder(carCapacity, carType)
+            }
+        }
 
         sessionManager = SessionManager(requireContext())
     }
@@ -66,8 +74,8 @@ class BottomSheetFragment(
         picker.show(childFragmentManager, "SCHEDULE DATE")
 
         picker.addOnPositiveButtonClickListener {
-            datePickup = picker.headerText.toString()
-            binding.tvDate.text = picker.selection.toString()
+            datePickup = picker.headerText
+            binding.tvDate.text = picker.headerText
         }
 
     }
@@ -90,7 +98,7 @@ class BottomSheetFragment(
         }
     }
 
-    private fun createOrder() {
+    private fun createOrder(carCapacity: String, carType: String) {
         val token = sessionManager.fetchAuthToken()
         Log.d("TOKEN", token.toString())
         if (token != null) {
@@ -98,13 +106,16 @@ class BottomSheetFragment(
                 pickupLatLng,
                 destinationLatLng,
                 "$timePickup + $datePickup",
-                4,
-                "Subaru",
+                carCapacity.toInt(),
+                carType,
                 requireContext(),
                 token.toString()
-            ).observe(requireActivity(), {isSuccess ->
-                if (isSuccess){
+            ).observe(viewLifecycleOwner, { isSuccess ->
+                if (isSuccess) {
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_LONG).show()
+                    val intent = Intent(activity, PassengerList::class.java)
+                    activity?.startActivity(intent)
+                    
                 } else
                     Toast.makeText(requireContext(), "Error Post", Toast.LENGTH_LONG).show()
             })

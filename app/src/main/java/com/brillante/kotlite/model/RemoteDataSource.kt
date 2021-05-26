@@ -8,6 +8,8 @@ import com.brillante.kotlite.model.direction.DirectionResponses
 import com.brillante.kotlite.model.login.LoginRequest
 import com.brillante.kotlite.model.login.LoginResponse
 import com.brillante.kotlite.model.order.OrderRequest
+import com.brillante.kotlite.model.psgList.PassengerListResponse
+import com.brillante.kotlite.model.psgList.PassengerListResponseItem
 import com.brillante.kotlite.preferences.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -121,6 +123,32 @@ class RemoteDataSource {
         })
     }
 
+    fun getPassengerList(callback: PassengerListCallback){
+        val client = ApiConfig.getWebServices().getListPsg()
+        client.enqueue(object: Callback<List<PassengerListResponseItem>> {
+            override fun onResponse(
+                call: Call<List<PassengerListResponseItem>>,
+                response: Response<List<PassengerListResponseItem>>
+            ) {
+                if (response.isSuccessful){
+                    val data = response.body()
+                    if (data != null) {
+                        callback.onPsgListReceived(data)
+                    } else Log.d("GET PSG", "DATA NULL")
+                } else Log.d("GET PSG", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<List<PassengerListResponseItem>>, t: Throwable) {
+                Log.d("GET PSG", t.toString())
+            }
+
+
+        })
+    }
+
+    interface  PassengerListCallback {
+        fun onPsgListReceived(response: List<PassengerListResponseItem>)
+    }
     interface DirectionCallback {
         fun onDirectionReceived(response: DirectionResponses?)
     }

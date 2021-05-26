@@ -14,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.BuildConfig
 import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.ActivityMapsBinding
-import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.common.api.Status
@@ -36,17 +35,21 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
     private var map: GoogleMap? = null
     private var isCanceled: Boolean = true
     private lateinit var binding: ActivityMapsBinding
+
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+
     // A default location
     // not granted.
     private val defaultLocation = LatLng(-33.8523341, 151.2106085)
     private var locationPermissionGranted = false
+
     // The geographical location where the device is currently located. That is, the last-known
     // location retrieved by the Fused Location Provider.
     private var lastKnownLocation: Location? = null
     private var destinationLocation: LatLng? = null
     private var pickupLocation: LatLng? = null
+
     //ViewModel
     private lateinit var mapViewModel: MapViewModel
 
@@ -54,6 +57,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         private val TAG = MapsActivity::class.java.simpleName
         private const val DEFAULT_ZOOM = 20
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
+        const val EXTRA_CAPACITY = "extra_capacity"
+        const val EXTRA_CARTYPE = "extra_cartype"
     }
 
 
@@ -65,9 +70,14 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         //ViewModel
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
+        //getIntentData
+        val carCapacity: String? = intent.getStringExtra(EXTRA_CAPACITY)
+        val carType: String? = intent.getStringExtra(EXTRA_CARTYPE)
         //bottomsheet
-        val bottomSheetFragment = BottomSheetFragment(pickupLocation,destinationLocation)
+        var bottomSheetFragment: TimePickerFragment
         binding.btnSchedule.setOnClickListener {
+            bottomSheetFragment =
+                TimePickerFragment(pickupLocation, destinationLocation, carType, carCapacity)
             bottomSheetFragment.show(supportFragmentManager, "ScheduleBottomSheet")
         }
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
@@ -78,6 +88,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
+
 //        binding.navView.selectedItemId = R.id.navigation_home
 //
 //        binding.navView.setOnNavigationItemSelectedListener {

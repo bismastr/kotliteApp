@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.brillante.kotlite.databinding.ActivityRoleBinding
+import com.brillante.kotlite.ui.driver.info.DriverInfoActivity
 import com.brillante.kotlite.ui.main.MapsActivity
 
 class RoleActivity : AppCompatActivity() {
@@ -16,7 +17,7 @@ class RoleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.cvDriver.setOnClickListener {
-            startActivity(Intent(this, MapsActivity::class.java))
+            startActivity(Intent(this, DriverInfoActivity::class.java))
         }
     }
 }

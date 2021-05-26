@@ -30,4 +30,12 @@
     <string name="date_picker">Date Picker</string>
     <string name="time_picker">Time Picker</string>
     <string name="book_ride">Book Ride</string>
+    <string name="informasi_kendaraan">Informasi Kendaraan</string>
+    <string name="isi_informasi_kendaraan_mu">Isi Informasi Kendaraan Mu</string>
+    <string name="what_is_your_car">What is Your Car?</string>
+    <string name="kapasitas_kendaraan_mu">Kapasitas Kendaraan Mu?</string>
+    <string name="selesai">Selesai</string>
+    <string name="pending_list">Pending List</string>
+    <string name="terima">Terima</string>
+    <string name="tolak">Tolak</string>
 </resources>

@@ -6,7 +6,9 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.brillante.kotlite.BuildConfig
+import com.brillante.kotlite.data.local.entity.PassengerListEntity
 import com.brillante.kotlite.model.direction.DirectionResponses
+import com.brillante.kotlite.model.psgList.PassengerListResponseItem
 import com.brillante.kotlite.preferences.SessionManager
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -106,7 +108,6 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
             val latStart: String = latLngStart.latitude.toString()
             val longEnd: String = latLngEnd.longitude.toString()
             val latEnd: String = latLngEnd.latitude.toString()
-
             remoteDataSource.createOrder(
                 latStart,
                 longStart,
@@ -127,6 +128,36 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         } else isCreated.postValue(false)
 
         return isCreated
+    }
+
+    override fun getPsgList(): LiveData<List<PassengerListEntity>> {
+        val psgListResult = MutableLiveData<List<PassengerListEntity>>()
+        remoteDataSource.getPassengerList(object : RemoteDataSource.PassengerListCallback {
+            override fun onPsgListReceived(response: List<PassengerListResponseItem>) {
+                val psgList = ArrayList<PassengerListEntity>()
+                for (i in response) {
+                    val psg = PassengerListEntity(
+                        i.distance,
+                        i.longPick,
+                        i.fee,
+                        i.lastName,
+                        i.longDrop,
+                        i.timeTaken,
+                        i.phone,
+                        i.latDrop,
+                        i.id,
+                        i.time,
+                        i.firstName,
+                        i.latPick,
+                        i.status,
+                        i.order
+                    )
+                    psgList.add(psg)
+                }
+                psgListResult.postValue(psgList)
+            }
+        })
+        return psgListResult
     }
 
 

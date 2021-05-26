@@ -1,28 +1,22 @@
-/*
- * Created by Muhammad Utsman on 31/12/2018
- * Copyright (c) 2018 . All rights reserved.
- * Last modified 12/31/18 11:21 PM
- */
-
 package com.brillante.kotlite.model.direction
 
 import com.google.gson.annotations.SerializedName
 
 data class Step(
     @SerializedName("distance")
-        var distance: Distance?,
+    var distance: Distance?,
     @SerializedName("duration")
-        var duration: Duration?,
+    var duration: Duration?,
     @SerializedName("end_location")
-        var endLocation: EndLocation?,
+    var endLocation: EndLocation?,
     @SerializedName("html_instructions")
-        var htmlInstructions: String?,
+    var htmlInstructions: String?,
     @SerializedName("maneuver")
-        var maneuver: String?,
+    var maneuver: String?,
     @SerializedName("polyline")
-        var polyline: Polyline?,
+    var polyline: Polyline?,
     @SerializedName("start_location")
-        var startLocation: StartLocation?,
+    var startLocation: StartLocation?,
     @SerializedName("travel_mode")
-        var travelMode: String?
+    var travelMode: String?
 )
