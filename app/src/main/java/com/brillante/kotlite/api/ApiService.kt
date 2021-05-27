@@ -1,12 +1,11 @@
 package com.brillante.kotlite.api
 
-import com.brillante.kotlite.model.login.LoginRequest
 import com.brillante.kotlite.model.direction.DirectionResponses
+import com.brillante.kotlite.model.login.LoginRequest
 import com.brillante.kotlite.model.login.LoginResponse
 import com.brillante.kotlite.model.order.OrderRequest
-import com.brillante.kotlite.model.psgList.PassengerListResponse
 import com.brillante.kotlite.model.psgList.PassengerListResponseItem
-import com.brillante.kotlite.ui.driver.psgList.PassengerList
+import com.brillante.kotlite.model.psgList.patch.PatchResponse
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -27,5 +26,12 @@ interface ApiService {
 
     @GET("/passengers/pendinglist/13/")
     fun getListPsg(): Call<List<PassengerListResponseItem>>
+
+    @GET("/passengers/list/13/")
+    fun getAccPsgList(): Call<List<PassengerListResponseItem>>
+
+    @PATCH ("/passengers/accepted/{id}/")
+    fun patchPsgAcc(@Path("id") id: Int): Call<PatchResponse>
+
 
 }

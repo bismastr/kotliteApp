@@ -1,10 +1,12 @@
 package com.brillante.kotlite.ui.driver.psgList
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +19,6 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 class PendingListFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentPendingListBinding? = null
     private val binding get() = _binding as FragmentPendingListBinding
-
     private lateinit var passengerListViewModel: PassengerListViewModel
     private lateinit var adapterPsgList: PsgListAdapter
 
@@ -37,6 +38,7 @@ class PendingListFragment : BottomSheetDialogFragment() {
         passengerListViewModel =
             ViewModelProvider(this, factory)[PassengerListViewModel::class.java]
         setupRecyclerView()
+        setOnClickCallback()
     }
 
     private fun setupRecyclerView() {
@@ -45,6 +47,23 @@ class PendingListFragment : BottomSheetDialogFragment() {
             LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.rvPendingList.adapter = adapterPsgList
         getPsgList()
+    }
+
+    private fun setOnClickCallback() {
+        adapterPsgList.setOnItemCLickCallback(object : PsgListAdapter.OnClickCallback {
+            override fun onAccClicked(data: PassengerListEntity, position: Int) {
+                passengerListViewModel.patchAccPsg(data.id)
+                adapterPsgList.dataList.removeAt(position)
+                adapterPsgList.notifyItemRemoved(position)
+                adapterPsgList.notifyItemRangeChanged(position, adapterPsgList.dataList.size)
+            }
+
+            override fun onDeniedClicked(data: PassengerListEntity, position: Int) {
+                Toast.makeText(requireContext(), "DENIED CLICKED", Toast.LENGTH_SHORT).show()
+            }
+
+        })
+
     }
 
     private fun getPsgList() {

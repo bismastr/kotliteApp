@@ -10,4 +10,12 @@ class PassengerListViewModel(private val repository: Repository): ViewModel() {
     fun getPsgList(): LiveData<List<PassengerListEntity>>{
         return repository.getPsgList()
     }
+
+    fun getAccListPsg(): LiveData<List<PassengerListEntity>> {
+        return repository.getAccPsgList()
+    }
+
+    fun patchAccPsg(id: Int): LiveData<Boolean>{
+        return repository.patchAccPsg(id)
+    }
 }

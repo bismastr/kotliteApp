@@ -51,6 +51,7 @@ class DriverInfoActivity : AppCompatActivity() {
         val  intent = Intent(this, MapsActivity::class.java)
         intent.putExtra(MapsActivity.EXTRA_CAPACITY, capacity)
         intent.putExtra( MapsActivity.EXTRA_CARTYPE, carType)
+        intent.putExtra(MapsActivity.EXTRA_FROM, 0)
         startActivity(intent)
     }
 }

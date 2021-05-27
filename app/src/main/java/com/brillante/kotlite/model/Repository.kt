@@ -160,5 +160,47 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         return psgListResult
     }
 
+    override fun getAccPsgList(): LiveData<List<PassengerListEntity>> {
+        val psgListResult = MutableLiveData<List<PassengerListEntity>>()
+        remoteDataSource.getAccPsgList(object : RemoteDataSource.PsgAccListCallback {
+            override fun onPsgListReceived(response: List<PassengerListResponseItem>) {
+                val psgList = ArrayList<PassengerListEntity>()
+                for (i in response) {
+                    val psg = PassengerListEntity(
+                        i.distance,
+                        i.longPick,
+                        i.fee,
+                        i.lastName,
+                        i.longDrop,
+                        i.timeTaken,
+                        i.phone,
+                        i.latDrop,
+                        i.id,
+                        i.time,
+                        i.firstName,
+                        i.latPick,
+                        i.status,
+                        i.order
+                    )
+                    psgList.add(psg)
+                }
+                psgListResult.postValue(psgList)
+            }
+
+        })
+        return psgListResult
+    }
+
+    override fun patchAccPsg(id: Int): LiveData<Boolean> {
+        val patchAcc = MutableLiveData<Boolean>()
+        remoteDataSource.patchPsgAcc(id, object : RemoteDataSource.PsgAccPatchCallback {
+            override fun onPsgAccReceived(isSuccess: Boolean) {
+                patchAcc.postValue(isSuccess)
+            }
+
+        })
+        return patchAcc
+    }
+
 
 }

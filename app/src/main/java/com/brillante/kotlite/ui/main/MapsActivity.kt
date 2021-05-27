@@ -59,8 +59,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         private const val PERMISSIONS_REQUEST_ACCESS_FINE_LOCATION = 1
         const val EXTRA_CAPACITY = "extra_capacity"
         const val EXTRA_CARTYPE = "extra_cartype"
+        const val EXTRA_FROM = "extra_from"
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,15 +71,17 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
         //getIntentData
-        val carCapacity: String? = intent.getStringExtra(EXTRA_CAPACITY)
-        val carType: String? = intent.getStringExtra(EXTRA_CARTYPE)
+        val carCapacity: String = intent.getStringExtra(EXTRA_CAPACITY).toString()
+        val carType: String = intent.getStringExtra(EXTRA_CARTYPE).toString()
+        val from: Int = intent.getIntExtra(EXTRA_FROM, 0)
         //bottomsheet
         var bottomSheetFragment: TimePickerFragment
         binding.btnSchedule.setOnClickListener {
             bottomSheetFragment =
-                TimePickerFragment(pickupLocation, destinationLocation, carType, carCapacity)
+                TimePickerFragment(pickupLocation, destinationLocation, carType, carCapacity, from)
             bottomSheetFragment.show(supportFragmentManager, "ScheduleBottomSheet")
         }
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
             .findFragmentById(R.id.map) as SupportMapFragment
@@ -106,8 +108,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
 
     override fun onMapReady(googleMap: GoogleMap) {
         this.map = googleMap
-//         Add a marker in Sydney and move the camera
-//         Prompt the user for permission.
         getLocationPermission()
         // Turn on the My Location layer and the related control on the map.
         updateLocationUI()
@@ -125,7 +125,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
             autocompleteFragment.setHint("Mau Kemana Hari Ini?")
             autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
             autocompleteFragment.setCountries("ID")
-
             // Specify the types of place data to return.
             autocompleteFragment.setPlaceFields(
                 listOf(
@@ -282,21 +281,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
             binding.btnSetlocation.visibility = View.GONE
             pickupLocation = center
             showDirection(pickupLocation, destinationLocation, map)
-
-//            mapViewModel.createOrder(
-//                pickupLocation,
-//                destinationLocation,
-//                "23:00",
-//                4,
-//                "Subaru",
-//                this,
-//                token.toString()
-//            ).observe(this, { isSuccess ->
-//                if (isSuccess){
-//                    Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
-//                } else
-//                    Toast.makeText(this, "Error Post", Toast.LENGTH_LONG).show()
-//            })
         }
 
 

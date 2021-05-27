@@ -10,6 +10,7 @@ import com.brillante.kotlite.model.login.LoginResponse
 import com.brillante.kotlite.model.order.OrderRequest
 import com.brillante.kotlite.model.psgList.PassengerListResponse
 import com.brillante.kotlite.model.psgList.PassengerListResponseItem
+import com.brillante.kotlite.model.psgList.patch.PatchResponse
 import com.brillante.kotlite.preferences.SessionManager
 import retrofit2.Call
 import retrofit2.Callback
@@ -144,6 +145,57 @@ class RemoteDataSource {
 
 
         })
+    }
+
+    fun getAccPsgList(callback: PsgAccListCallback){
+        val client = ApiConfig.getWebServices().getAccPsgList()
+        client.enqueue(object : Callback<List<PassengerListResponseItem>> {
+            override fun onResponse(
+                call: Call<List<PassengerListResponseItem>>,
+                response: Response<List<PassengerListResponseItem>>
+            ) {
+                if (response.isSuccessful){
+                    val data = response.body()
+                    if (data != null) {
+                        callback.onPsgListReceived(data)
+                    } else Log.d("GET PSG", "DATA NULL")
+                } else Log.d("GET PSG", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<List<PassengerListResponseItem>>, t: Throwable) {
+                Log.d("GET PSG", t.toString())
+            }
+
+        })
+    }
+
+    fun patchPsgAcc(id: Int, callback: PsgAccPatchCallback){
+        val client = ApiConfig.getWebServices().patchPsgAcc(id)
+        client.enqueue(object : Callback<PatchResponse>{
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful){
+                    Log.d("PATCH ACC", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH ACC", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                callback.onPsgAccReceived(true)
+                Log.d("PATCH ACC", t.toString())
+            }
+
+        })
+    }
+
+    interface PsgAccPatchCallback{
+        fun onPsgAccReceived(isSuccess: Boolean)
+    }
+
+    interface PsgAccListCallback{
+        fun onPsgListReceived(response: List<PassengerListResponseItem>)
     }
 
     interface  PassengerListCallback {

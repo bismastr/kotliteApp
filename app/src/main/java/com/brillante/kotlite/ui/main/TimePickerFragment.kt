@@ -11,21 +11,26 @@ import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
-import com.brillante.kotlite.ui.driver.psgList.PassengerList
+import com.brillante.kotlite.ui.driver.psgList.PassengerListActivity
+import com.brillante.kotlite.ui.psg.driverList.DriverListActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TimePickerFragment(
     private val pickupLatLng: LatLng?,
     private val destinationLatLng: LatLng?,
-    private val carType: String?,
-    private val carCapacity: String?,
+    private val carType: String,
+    private val carCapacity: String,
+    private val from: Int
 
-    ) : BottomSheetDialogFragment() {
+) : BottomSheetDialogFragment() {
     private var _binding: BottomsheetFragmentBinding? = null
     private val binding get() = _binding as BottomsheetFragmentBinding
 
@@ -55,12 +60,20 @@ class TimePickerFragment(
         binding.btnTime.setOnClickListener { openTimePicker() }
 
         binding.btnOrder.setOnClickListener {
-            if (carCapacity != null && carType != null) {
+            if (from == 0) {
                 createOrder(carCapacity, carType)
+            } else if(from == 1){
+                createPsg()
             }
+
         }
 
         sessionManager = SessionManager(requireContext())
+    }
+
+    private fun createPsg() {
+        val intent = Intent(activity, DriverListActivity::class.java)
+        activity?.startActivity(intent)
     }
 
     private fun openDatePicker() {
@@ -73,12 +86,32 @@ class TimePickerFragment(
             .build()
         picker.show(childFragmentManager, "SCHEDULE DATE")
 
+
+
+
         picker.addOnPositiveButtonClickListener {
-            datePickup = picker.headerText
-            binding.tvDate.text = picker.headerText
+            val calendarDate = Calendar.getInstance()
+            calendarDate.timeInMillis = picker.selection!!
+            val month = getAbbreviatedFromDateTime(calendarDate,"MM")
+            val day=getAbbreviatedFromDateTime(calendarDate,"d")
+            val year=getAbbreviatedFromDateTime(calendarDate,"yyyy")
+            datePickup = "$year-$month-$day"
+            binding.tvDate.text = datePickup
         }
 
     }
+
+    private fun getAbbreviatedFromDateTime(dateTime: Calendar, field: String): String? {
+        val output = SimpleDateFormat(field)
+        try {
+            return output.format(dateTime.time)    // format output
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+        return null
+    }
+
 
     private fun openTimePicker() {
         val clockFormat = TimeFormat.CLOCK_24H
@@ -91,10 +124,13 @@ class TimePickerFragment(
         picker.show(childFragmentManager, "SCHEDULE TIME")
 
         picker.addOnPositiveButtonClickListener {
+
             val h = picker.hour
             val m = picker.minute
-            timePickup = "${h}:${m}"
-            binding.tvTime.text = "${h}:${m}"
+            val hourAsText = if (h < 10) "0$h" else h
+            val minuteAsText = if (m < 10) "0$m" else m
+            timePickup = "${hourAsText}:${minuteAsText}"
+            binding.tvTime.text = timePickup
         }
     }
 
@@ -113,9 +149,9 @@ class TimePickerFragment(
             ).observe(viewLifecycleOwner, { isSuccess ->
                 if (isSuccess) {
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_LONG).show()
-                    val intent = Intent(activity, PassengerList::class.java)
+                    val intent = Intent(activity, PassengerListActivity::class.java)
                     activity?.startActivity(intent)
-                    
+
                 } else
                     Toast.makeText(requireContext(), "Error Post", Toast.LENGTH_LONG).show()
             })

@@ -31,4 +31,8 @@ interface DataSource {
     ): LiveData<Boolean>
 
     fun getPsgList(): LiveData<List<PassengerListEntity>>
+
+    fun getAccPsgList(): LiveData<List<PassengerListEntity>>
+
+    fun patchAccPsg(id: Int): LiveData<Boolean>
 }
