@@ -10,11 +10,11 @@
         android:id="@+id/tv_choose"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/comfortaa_bold"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/roboto_light"
         android:text="@string/choose_role"
-        android:textColor="@color/black"
-        android:textSize="30sp"
+        android:textColor="@color/secondaryColor"
+        android:textSize="36sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -29,10 +29,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_choose">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
@@ -46,10 +48,9 @@
                 android:fontFamily="@font/roboto_light"
                 android:text="@string/driver"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
-
 
 
     </androidx.cardview.widget.CardView>
@@ -64,15 +65,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cv_driver">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="250dp"
                 android:contentDescription="@string/passanger"
-                android:src="@drawable/passenger_illustration"/>
+                android:src="@drawable/passenger_illustration" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -82,7 +85,7 @@
                 android:fontFamily="@font/roboto_light"
                 android:text="@string/passenger"
                 android:textColor="@color/black"
-                android:textSize="30sp"
+                android:textSize="24sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
