@@ -33,5 +33,15 @@ interface ApiService {
     @PATCH ("/passengers/accepted/{id}/")
     fun patchPsgAcc(@Path("id") id: Int): Call<PatchResponse>
 
+    //patch status passenger
+    @PATCH("/passengers/arrived/{id}/")
+    fun patchPsgArrived(@Path("id") id: Int): Call<PatchResponse>
+    @PATCH("/passengers/startride/{id}/")
+    fun patchPsgStartRide(@Path("id") id: Int): Call<PatchResponse>
+    @PATCH("/passengers/completeride/{id}/")
+    fun patchPsgCompleteRide(@Path("id")id: Int): Call<PatchResponse>
+    @PATCH("/passengers/done/{id}/")
+    fun patchPsgDone(@Path("id")id: Int): Call<PatchResponse>
+
 
 }

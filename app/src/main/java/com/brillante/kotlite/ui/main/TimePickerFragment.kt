@@ -87,8 +87,6 @@ class TimePickerFragment(
         picker.show(childFragmentManager, "SCHEDULE DATE")
 
 
-
-
         picker.addOnPositiveButtonClickListener {
             val calendarDate = Calendar.getInstance()
             calendarDate.timeInMillis = picker.selection!!
@@ -136,12 +134,11 @@ class TimePickerFragment(
 
     private fun createOrder(carCapacity: String, carType: String) {
         val token = sessionManager.fetchAuthToken()
-        Log.d("TOKEN", token.toString())
         if (token != null) {
             mapViewModel.createOrder(
                 pickupLatLng,
                 destinationLatLng,
-                "$timePickup + $datePickup",
+                "$timePickup $datePickup",
                 carCapacity.toInt(),
                 carType,
                 requireContext(),

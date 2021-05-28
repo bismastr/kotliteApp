@@ -190,6 +190,92 @@ class RemoteDataSource {
         })
     }
 
+    fun patchPsgArrived(id: Int, callback: PsgAccPatchCallback){
+        val client = ApiConfig.getWebServices().patchPsgArrived(id)
+        client.enqueue(object : Callback<PatchResponse>{
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful){
+                    Log.d("PATCH ARRIVED", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH ARRIVED", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                callback.onPsgAccReceived(true)
+                Log.d("PATCH ARRIVED", t.toString())
+            }
+
+        })
+    }
+
+    fun patchPsgStartRide(id: Int, callback: PsgAccPatchCallback){
+        val client = ApiConfig.getWebServices().patchPsgStartRide(id)
+        client.enqueue(object : Callback<PatchResponse>{
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful){
+                    Log.d("PATCH START", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH START", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                callback.onPsgAccReceived(true)
+                Log.d("PATCH START", t.toString())
+            }
+
+        })
+    }
+
+    fun patchPsgCompleteRide(id: Int, callback: PsgAccPatchCallback){
+        val client = ApiConfig.getWebServices().patchPsgCompleteRide(id)
+        client.enqueue(object : Callback<PatchResponse>{
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful){
+                    Log.d("PATCH COMPLETE", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH COMPLETE", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                callback.onPsgAccReceived(true)
+                Log.d("PATCH COMPLETE", t.toString())
+            }
+
+        })
+    }
+
+    fun patchPsgDone(id: Int, callback: PsgAccPatchCallback){
+        val client = ApiConfig.getWebServices().patchPsgDone(id)
+        client.enqueue(object : Callback<PatchResponse>{
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful){
+                    Log.d("PATCH DONE", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH DONE", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                callback.onPsgAccReceived(true)
+                Log.d("PATCH DONE", t.toString())
+            }
+
+        })
+    }
+
+
+
     interface PsgAccPatchCallback{
         fun onPsgAccReceived(isSuccess: Boolean)
     }

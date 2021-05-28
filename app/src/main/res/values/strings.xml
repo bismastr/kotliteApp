@@ -6,7 +6,6 @@
     <string name="title_profile">Profile</string>
     <string name="set_location">Set location</string>
     <string name="kotlite">Kotlite</string>
-    <string name="login">Login</string>
     <string name="e_mail">E-mail</string>
     <string name="password">Password</string>
     <string name="log_in">SIGN-UP</string>
@@ -38,4 +37,14 @@
     <string name="pending_list">Pending List</string>
     <string name="terima">Terima</string>
     <string name="tolak">Tolak</string>
+    <string name="let_s_ride_now">Let\'s Ride Now</string>
+    <string name="done">Done</string>
+    <string name="complete_ride">Complete Ride</string>
+    <string name="start_ride">Start Ride</string>
+    <string name="arrived">Arrived</string>
+    <string name="login">Login</string>
+    <string name="ride_better">Ride better</string>
+    <string name="together">together.</string>
+    <string name="join_our_community">Join Our Community</string>
+    <string name="passenger">Passenger</string>
 </resources>

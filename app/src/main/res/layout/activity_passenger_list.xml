@@ -23,4 +23,18 @@
         android:fontFamily="@font/montserrat_light"
         android:textStyle="bold"/>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ride"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:backgroundTint="@color/white"
+        app:strokeColor="@color/black"
+        app:strokeWidth="2dp"
+        android:textColor="@color/black"
+        android:text="@string/let_s_ride_now"
+        android:fontFamily="@font/montserrat_light"
+        android:textStyle="bold"/>
+
 </LinearLayout>

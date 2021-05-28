@@ -1,5 +1,6 @@
 package com.brillante.kotlite.ui.driver.psgList
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.brillante.kotlite.data.local.entity.PassengerListEntity
 import com.brillante.kotlite.databinding.ActivityPassengerListBinding
+import com.brillante.kotlite.ui.driver.ongoing.DriverOnGoingActivity
 import com.brillante.kotlite.ui.driver.psgList.adapter.PsgListAdapter
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 
@@ -25,6 +27,11 @@ class PassengerListActivity : AppCompatActivity() {
         val pendingListFragment = PendingListFragment()
         binding.btnPendingList.setOnClickListener {
             pendingListFragment.show(supportFragmentManager, "PendingList")
+        }
+
+        binding.btnRide.setOnClickListener {
+            val intent = Intent(this, DriverOnGoingActivity::class.java)
+            startActivity(intent)
         }
 
         //viewmodel

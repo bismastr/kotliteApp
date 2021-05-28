@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.model.Repository
 import com.brillante.kotlite.ui.login.LoginViewModel
 import com.brillante.kotlite.ui.MapViewModel
+import com.brillante.kotlite.ui.driver.ongoing.PassengerOnGoingViewModel
 import com.brillante.kotlite.ui.driver.psgList.PassengerListViewModel
 import com.brillante.kotlite.ui.driver.psgList.adapter.PsgListViewHolder
 import com.brillante.kotlite.util.Injection
@@ -37,6 +38,9 @@ class ViewModelFactory private constructor(private val mRepository: Repository) 
             }
             modelClass.isAssignableFrom(PassengerListViewModel::class.java) -> {
                 PassengerListViewModel(mRepository) as T
+            }
+            modelClass.isAssignableFrom(PassengerOnGoingViewModel::class.java) -> {
+                PassengerOnGoingViewModel(mRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

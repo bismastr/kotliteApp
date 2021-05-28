@@ -122,7 +122,7 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                         isCreated.postValue(isSucces)
                     }
 
-                }, "Bearer " + authHeader
+                }, "Bearer $authHeader"
             )
             return isCreated
         } else isCreated.postValue(false)
@@ -194,6 +194,50 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
     override fun patchAccPsg(id: Int): LiveData<Boolean> {
         val patchAcc = MutableLiveData<Boolean>()
         remoteDataSource.patchPsgAcc(id, object : RemoteDataSource.PsgAccPatchCallback {
+            override fun onPsgAccReceived(isSuccess: Boolean) {
+                patchAcc.postValue(isSuccess)
+            }
+
+        })
+        return patchAcc
+    }
+
+    override fun patchPsgArrived(id: Int): LiveData<Boolean> {
+        val patchAcc = MutableLiveData<Boolean>()
+        remoteDataSource.patchPsgArrived(id, object : RemoteDataSource.PsgAccPatchCallback {
+            override fun onPsgAccReceived(isSuccess: Boolean) {
+                patchAcc.postValue(isSuccess)
+            }
+
+        })
+        return patchAcc
+    }
+
+    override fun patchPsgStartRide(id: Int): LiveData<Boolean> {
+        val patchAcc = MutableLiveData<Boolean>()
+        remoteDataSource.patchPsgStartRide(id, object : RemoteDataSource.PsgAccPatchCallback {
+            override fun onPsgAccReceived(isSuccess: Boolean) {
+                patchAcc.postValue(isSuccess)
+            }
+
+        })
+        return patchAcc
+    }
+
+    override fun patchPsgCompleteRide(id: Int): LiveData<Boolean> {
+        val patchAcc = MutableLiveData<Boolean>()
+        remoteDataSource.patchPsgCompleteRide(id, object : RemoteDataSource.PsgAccPatchCallback {
+            override fun onPsgAccReceived(isSuccess: Boolean) {
+                patchAcc.postValue(isSuccess)
+            }
+
+        })
+        return patchAcc
+    }
+
+    override fun patchPsgDone(id: Int): LiveData<Boolean> {
+        val patchAcc = MutableLiveData<Boolean>()
+        remoteDataSource.patchPsgDone(id, object : RemoteDataSource.PsgAccPatchCallback {
             override fun onPsgAccReceived(isSuccess: Boolean) {
                 patchAcc.postValue(isSuccess)
             }
