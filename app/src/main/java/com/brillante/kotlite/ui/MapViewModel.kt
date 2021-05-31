@@ -3,7 +3,8 @@ package com.brillante.kotlite.ui
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.brillante.kotlite.model.Repository
+import com.brillante.kotlite.data.Repository
+import com.brillante.kotlite.data.local.entity.OrderEntity
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 
@@ -21,7 +22,7 @@ class MapViewModel(private val repository: Repository) : ViewModel() {
         carType: String,
         context: Context,
         authHeader: String
-    ): LiveData<Boolean> {
+    ): LiveData<OrderEntity> {
         return repository.createOrder(latLngStart, latLngEnd, time, capacity, carType, context, authHeader)
     }
 }

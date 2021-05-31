@@ -2,7 +2,6 @@ package com.brillante.kotlite.ui.driver.psgList.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brillante.kotlite.data.local.entity.PassengerListEntity
@@ -45,6 +44,7 @@ class PsgListAdapter: RecyclerView.Adapter<PsgListViewHolder>() {
     override fun getItemCount(): Int {
         return dataList.size
     }
+
    interface OnClickCallback {
        fun onAccClicked(data: PassengerListEntity, position: Int)
        fun onDeniedClicked(data: PassengerListEntity, position: Int)

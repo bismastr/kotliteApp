@@ -47,4 +47,21 @@
     <string name="together">together.</string>
     <string name="join_our_community">Join Our Community</string>
     <string name="passenger">Passenger</string>
+    <string name="driver_photo">driverPhoto</string>
+    <string name="placeicon">placeIcon</string>
+    <string name="dummy_places_pickup">Jl. Keputih, Sukolilo Surabaya</string>
+    <string name="dummy_place_drop">Institut Teknologi Sepuluh Nopember</string>
+    <string name="car_type">Car Type</string>
+    <string name="choose">Choose</string>
+    <string name="dummy_capacity">0 / 4</string>
+    <string name="capacity">Capacity</string>
+    <string name="dummy_cartype">Jazz</string>
+    <string name="dot">dot</string>
+    <string name="dummy_distance">4km</string>
+    <string name="distance">Distance</string>
+    <string name="fee">Fee</string>
+    <string name="dummy_fee">12,000</string>
+    <string name="call">Call</string>
+    <string name="accept">Accept</string>
+    <string name="deny">Deny</string>
 </resources>

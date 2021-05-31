@@ -29,5 +29,9 @@ data class PassengerListEntity(
 
     val status: String,
 
-    val order: Int
+    val order: Int,
+
+    val placePick: String,
+
+    val placeDrop: String
 )

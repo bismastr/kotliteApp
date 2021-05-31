@@ -2,7 +2,7 @@ package com.brillante.kotlite.ui.driver.ongoing
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.brillante.kotlite.model.Repository
+import com.brillante.kotlite.data.Repository
 
 class PassengerOnGoingViewModel(private val repository: Repository) : ViewModel() {
 

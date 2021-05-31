@@ -1,7 +1,7 @@
 package com.brillante.kotlite.util
 
-import com.brillante.kotlite.model.RemoteDataSource
-import com.brillante.kotlite.model.Repository
+import com.brillante.kotlite.data.RemoteDataSource
+import com.brillante.kotlite.data.Repository
 
 object Injection {
     fun provideRepository(): Repository {

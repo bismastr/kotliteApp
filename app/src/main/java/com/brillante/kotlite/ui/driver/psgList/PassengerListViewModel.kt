@@ -2,20 +2,21 @@ package com.brillante.kotlite.ui.driver.psgList
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import com.brillante.kotlite.data.Repository
 import com.brillante.kotlite.data.local.entity.PassengerListEntity
-import com.brillante.kotlite.model.Repository
 
-class PassengerListViewModel(private val repository: Repository): ViewModel() {
+class PassengerListViewModel(private val repository: Repository) : ViewModel() {
 
-    fun getPsgList(): LiveData<List<PassengerListEntity>>{
-        return repository.getPsgList()
+    fun getPsgList(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>> {
+        return repository.getPsgList(7, authHeader)
     }
 
-    fun getAccListPsg(): LiveData<List<PassengerListEntity>> {
-        return repository.getAccPsgList()
+    fun getAccListPsg(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>> {
+        return repository.getAccPsgList(7, authHeader)
     }
 
-    fun patchAccPsg(id: Int): LiveData<Boolean>{
-        return repository.patchAccPsg(id)
+    fun patchAccPsg(id: Int): LiveData<Boolean> {
+        return repository.patchAccPsg(7)
     }
+
 }

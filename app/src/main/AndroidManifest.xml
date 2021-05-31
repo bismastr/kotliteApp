@@ -13,8 +13,15 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kotlite"
         android:usesCleartextTraffic="true">
+        <activity android:name=".ui.splash.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".ui.driver.ongoing.DriverOnGoingActivity" />
-        <activity android:name=".ui.psg.driverList.DriverListActivity" />
+        <activity android:name=".ui.passenger.driverList.DriverListActivity" />
         <activity android:name=".ui.driver.psgList.PassengerListActivity">
 
         </activity>
@@ -23,16 +30,17 @@
         <activity android:name=".ui.role.RoleActivity" />
         <activity android:name=".ui.register.RegisterActivity" />
         <activity android:name=".ui.login.LoginActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".ui.main.AccountActivity" />
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
         <activity
             android:name=".ui.main.MapsActivity"
             android:label="@string/title_activity_maps" />

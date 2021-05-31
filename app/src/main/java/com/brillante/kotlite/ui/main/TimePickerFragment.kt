@@ -2,17 +2,17 @@ package com.brillante.kotlite.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
+import com.brillante.kotlite.data.remote.model.recomendation.RecommendationRequest
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
 import com.brillante.kotlite.ui.driver.psgList.PassengerListActivity
-import com.brillante.kotlite.ui.psg.driverList.DriverListActivity
+import com.brillante.kotlite.ui.passenger.driverList.DriverListActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -20,7 +20,6 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
-import java.time.format.DateTimeFormatter
 import java.util.*
 
 class TimePickerFragment(
@@ -54,7 +53,6 @@ class TimePickerFragment(
         //ViewModel
         val factory = ViewModelFactory.getInstance()
         mapViewModel = ViewModelProvider(this, factory)[MapViewModel::class.java]
-        Log.d("LATLONG", destinationLatLng.toString())
         binding.btnDate.setOnClickListener { openDatePicker() }
 
         binding.btnTime.setOnClickListener { openTimePicker() }
@@ -62,6 +60,7 @@ class TimePickerFragment(
         binding.btnOrder.setOnClickListener {
             if (from == 0) {
                 createOrder(carCapacity, carType)
+
             } else if(from == 1){
                 createPsg()
             }
@@ -72,7 +71,20 @@ class TimePickerFragment(
     }
 
     private fun createPsg() {
+        val latPick = pickupLatLng?.latitude.toString()
+        val longPick = pickupLatLng?.longitude.toString()
+        val latDrop = destinationLatLng?.latitude.toString()
+        val longDrop = destinationLatLng?.longitude.toString()
+
+        val driverListRequest = RecommendationRequest(
+            latPick,
+            longPick,
+            latDrop,
+            longDrop,
+            "$datePickup $timePickup",
+        )
         val intent = Intent(activity, DriverListActivity::class.java)
+        intent.putExtra("extra_recommendation", driverListRequest)
         activity?.startActivity(intent)
     }
 
@@ -93,7 +105,7 @@ class TimePickerFragment(
             val month = getAbbreviatedFromDateTime(calendarDate,"MM")
             val day=getAbbreviatedFromDateTime(calendarDate,"d")
             val year=getAbbreviatedFromDateTime(calendarDate,"yyyy")
-            datePickup = "$year-$month-$day"
+            datePickup = "$day-$month-$year"
             binding.tvDate.text = datePickup
         }
 
@@ -134,19 +146,21 @@ class TimePickerFragment(
 
     private fun createOrder(carCapacity: String, carType: String) {
         val token = sessionManager.fetchAuthToken()
+
         if (token != null) {
             mapViewModel.createOrder(
                 pickupLatLng,
                 destinationLatLng,
-                "$timePickup $datePickup",
+                "$datePickup $timePickup",
                 carCapacity.toInt(),
                 carType,
                 requireContext(),
                 token.toString()
-            ).observe(viewLifecycleOwner, { isSuccess ->
-                if (isSuccess) {
+            ).observe(viewLifecycleOwner, { Order ->
+                if (Order != null) {
                     Toast.makeText(requireContext(), "Success", Toast.LENGTH_LONG).show()
                     val intent = Intent(activity, PassengerListActivity::class.java)
+                    intent.putExtra("ORDER", Order)
                     activity?.startActivity(intent)
 
                 } else
@@ -158,8 +172,6 @@ class TimePickerFragment(
                 "Failed To Login",
                 Toast.LENGTH_LONG
             ).show()
-
-
     }
 
     override fun onDestroyView() {

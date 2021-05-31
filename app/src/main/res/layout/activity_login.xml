@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/primaryColor"
     tools:context=".ui.login.LoginActivity">
 
 
@@ -31,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="42dp"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="@font/roboto_light"
         android:text="@string/join_our_community"
         android:textColor="@color/black"
@@ -148,8 +149,8 @@
             android:layout_marginBottom="20dp"
             android:backgroundTint="@color/secondaryColor"
             android:fontFamily="@font/roboto"
-            android:textColor="@color/primaryColor"
             android:text="@string/login"
+            android:textColor="@color/primaryColor"
             android:textStyle="bold">
 
         </com.google.android.material.button.MaterialButton>
@@ -168,6 +169,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/roboto_light"
+                android:textColor="@color/primaryTextColor"
                 android:text="@string/don_t_have_an_account" />
 
             <TextView

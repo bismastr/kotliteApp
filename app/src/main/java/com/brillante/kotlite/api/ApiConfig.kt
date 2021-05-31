@@ -29,7 +29,7 @@ class ApiConfig {
                 .addInterceptor(loggingInterceptor)
                 .build()
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://proud-lamp-312513.et.r.appspot.com")
+                .baseUrl("http://34.101.148.246:8000")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()
