@@ -51,7 +51,6 @@
     <string name="placeicon">placeIcon</string>
     <string name="dummy_places_pickup">Jl. Keputih, Sukolilo Surabaya</string>
     <string name="dummy_place_drop">Institut Teknologi Sepuluh Nopember</string>
-    <string name="car_type">Car Type</string>
     <string name="choose">Choose</string>
     <string name="dummy_capacity">0 / 4</string>
     <string name="capacity">Capacity</string>
@@ -64,4 +63,21 @@
     <string name="call">Call</string>
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
+    <string name="get_in_touch_with_your_passanger">Get In Touch with Your Passanger</string>
+    <string name="who_you_will_ride_with">Who You Will Ride With</string>
+    <string name="bisma_satria">Bisma Satria</string>
+    <string name="don_t_forget_to_notify_your_passanger">Don\'t Forget to Notify Your Passanger</string>
+    <string name="your_passanger_status">Your Passanger Status</string>
+    <string name="finish_ride">Finish Ride</string>
+    <string name="dummy_goodjob">Good Job, Bisma</string>
+    <string name="here_s_your_invoice_for_today">Here\'s your invoice for today!</string>
+    <string name="dummy_income">Rp. 16,000</string>
+    <string name="car_type">Car Type</string>
+    <string name="time">Time</string>
+    <string name="jazz">Jazz</string>
+    <string name="_4">4</string>
+    <string name="_02_06_2021_07_00_wib">02–06–2021 07:00 WIB</string>
+    <string name="arriving">Arriving</string>
+    <string name="your_driver_will_depart_at">Your Driver will Depart at</string>
+    <string name="driver_status">Driver Status</string>
 </resources>

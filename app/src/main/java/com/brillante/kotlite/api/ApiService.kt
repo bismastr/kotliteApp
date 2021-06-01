@@ -2,7 +2,9 @@ package com.brillante.kotlite.api
 
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgRequest
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgResponse
+import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
 import com.brillante.kotlite.data.remote.model.direction.DirectionResponses
+import com.brillante.kotlite.data.remote.model.direction.Route
 import com.brillante.kotlite.data.remote.model.login.LoginRequest
 import com.brillante.kotlite.data.remote.model.login.LoginResponse
 import com.brillante.kotlite.data.remote.model.order.OrderRequest
@@ -39,6 +41,10 @@ interface ApiService {
     //TODO arriving
     @PATCH("/passengers/accepted/{id}/")
     fun patchPsgAcc(@Path("id") id: Int): Call<PatchResponse>
+    @GET("/drivers/route/{idOrder}/")
+    fun getOnGoingRoute(@Path("idOrder") orderId: Int, @Header("Authorization") authHeader: String): Call<List<Route>>
+    @GET ("/drivers/detail/{idOrder}/")
+    fun getDetailOrder(@Path ("idOrder") orderId: Int, @Header("Authorization") authHeader: String): Call<DetailOrderResponse>
 
     //passenger
     @POST("/drivers/recommendationlist/")
@@ -56,16 +62,16 @@ interface ApiService {
 
     //patch status passenger
     @PATCH("/passengers/arrived/{id}/")
-    fun patchPsgArrived(@Path("id") id: Int): Call<PatchResponse>
+    fun patchPsgArrived(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
 
     @PATCH("/passengers/startride/{id}/")
-    fun patchPsgStartRide(@Path("id") id: Int): Call<PatchResponse>
+    fun patchPsgStartRide(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
 
     @PATCH("/passengers/completeride/{id}/")
-    fun patchPsgCompleteRide(@Path("id") id: Int): Call<PatchResponse>
+    fun patchPsgCompleteRide(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
 
     @PATCH("/passengers/done/{id}/")
-    fun patchPsgDone(@Path("id") id: Int): Call<PatchResponse>
+    fun patchPsgDone(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
 
 
 }

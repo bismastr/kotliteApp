@@ -1,5 +1,6 @@
 package com.brillante.kotlite.ui.driver.ongoing
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -14,13 +15,17 @@ import com.brillante.kotlite.data.local.entity.OrderEntity
 import com.brillante.kotlite.data.local.entity.PassengerListEntity
 import com.brillante.kotlite.databinding.ActivityDriverOnGoingBinding
 import com.brillante.kotlite.preferences.SessionManager
+import com.brillante.kotlite.ui.driver.invoce.DriverInvoiceActivity
 import com.brillante.kotlite.ui.driver.ongoing.adapter.OnGoingAdapter
 import com.brillante.kotlite.ui.driver.ongoing.adapter.OnGoingViewHolder
 import com.brillante.kotlite.ui.driver.psgList.PassengerListViewModel
 import com.brillante.kotlite.viewmodel.ViewModelFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
-class DriverOnGoingActivity : AppCompatActivity() {
+class DriverOnGoingActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<ConstraintLayout>
     private lateinit var binding: ActivityDriverOnGoingBinding
     private var orderId: Int = 0
@@ -36,6 +41,10 @@ class DriverOnGoingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityDriverOnGoingBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        //map fragment
+        val mapFragment =
+            supportFragmentManager.findFragmentById(R.id.map_on_going) as? SupportMapFragment
+        mapFragment?.getMapAsync(this)
         //sessionmanager
         sessionManager = SessionManager(this)
         authHeader = sessionManager.fetchAuthToken().toString()
@@ -43,6 +52,12 @@ class DriverOnGoingActivity : AppCompatActivity() {
         val order = intent.getParcelableExtra<OrderEntity>("ORDER")
         if (order != null) {
             orderId = order.id
+        }
+        //btnClicklistener
+        binding.btnFinishRide.setOnClickListener {
+            val intent = Intent(this, DriverInvoiceActivity::class.java)
+            intent.putExtra("ORDER", order)
+            startActivity(intent)
         }
         val factory = ViewModelFactory.getInstance()
         onGoingViewModel = ViewModelProvider(this, factory)[PassengerOnGoingViewModel::class.java]
@@ -75,54 +90,90 @@ class DriverOnGoingActivity : AppCompatActivity() {
         })
     }
 
-    private fun onItemClickCallback(){
+    private fun onItemClickCallback() {
         adapterOnGoing.setOnItemCLickCallback(object : OnGoingAdapter.OnClickCallback {
             override fun onArrivedClicked(data: PassengerListEntity, holder: OnGoingViewHolder) {
-                onGoingViewModel.patchArrived(data.id).observe(this@DriverOnGoingActivity, {Success ->
-                    if(Success){
-                        holder.btnArrived.visibility = View.GONE
-                        holder.btnStartRide.visibility = View.VISIBLE
-                    } else {
-                        Toast.makeText(this@DriverOnGoingActivity, "ARRIVED FAILED", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                onGoingViewModel.patchArrived(data.id, authHeader)
+                    .observe(this@DriverOnGoingActivity, { Success ->
+                        if (Success) {
+                            holder.btnArrived.visibility = View.GONE
+                            holder.btnStartRide.visibility = View.VISIBLE
+                        } else {
+                            Toast.makeText(
+                                this@DriverOnGoingActivity,
+                                "ARRIVED FAILED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
 
             }
 
             override fun onStartRideClicked(data: PassengerListEntity, holder: OnGoingViewHolder) {
-                onGoingViewModel.patchStart(data.id).observe(this@DriverOnGoingActivity, {Success ->
-                    if(Success){
-                        holder.btnStartRide.visibility = View.GONE
-                        holder.btnCompleteRide.visibility = View.VISIBLE
-                    } else {
-                        Toast.makeText(this@DriverOnGoingActivity, "START FAILED", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                onGoingViewModel.patchStart(data.id, authHeader)
+                    .observe(this@DriverOnGoingActivity, { Success ->
+                        if (Success) {
+                            holder.btnStartRide.visibility = View.GONE
+                            holder.btnCompleteRide.visibility = View.VISIBLE
+                        } else {
+                            Toast.makeText(
+                                this@DriverOnGoingActivity,
+                                "START FAILED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
 
             }
 
-            override fun onCompleteRideClicked(data: PassengerListEntity, holder: OnGoingViewHolder) {
-                onGoingViewModel.patchComplete(data.id).observe(this@DriverOnGoingActivity, {Success ->
-                    if(Success){
-                        holder.btnCompleteRide.visibility = View.GONE
-                        holder.btnDone.visibility = View.VISIBLE
-                    } else {
-                        Toast.makeText(this@DriverOnGoingActivity, "START FAILED", Toast.LENGTH_SHORT).show()
-                    }
-                })
+            override fun onCompleteRideClicked(
+                data: PassengerListEntity,
+                holder: OnGoingViewHolder
+            ) {
+                onGoingViewModel.patchComplete(data.id, authHeader)
+                    .observe(this@DriverOnGoingActivity, { Success ->
+                        if (Success) {
+                            holder.btnCompleteRide.visibility = View.GONE
+                            holder.btnDone.visibility = View.VISIBLE
+                        } else {
+                            Toast.makeText(
+                                this@DriverOnGoingActivity,
+                                "START FAILED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
 
             }
 
             override fun onDoneClicked(data: PassengerListEntity, holder: OnGoingViewHolder) {
-                onGoingViewModel.patchDone(data.id).observe(this@DriverOnGoingActivity, {Success ->
-                    if(Success){
-                        Toast.makeText(this@DriverOnGoingActivity, "Done CLICKED", Toast.LENGTH_SHORT).show()
-                    } else {
-                        Toast.makeText(this@DriverOnGoingActivity, "START FAILED", Toast.LENGTH_SHORT).show()
-                    }
-                })
+                onGoingViewModel.patchDone(data.id, authHeader)
+                    .observe(this@DriverOnGoingActivity, { Success ->
+                        if (Success) {
+                            Toast.makeText(
+                                this@DriverOnGoingActivity,
+                                "Done CLICKED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                this@DriverOnGoingActivity,
+                                "START FAILED",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    })
             }
 
         })
+
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        getRoute(p0)
+    }
+
+    private fun getRoute(map: GoogleMap) {
+        onGoingViewModel.getRoute(orderId, authHeader, map)
     }
 }

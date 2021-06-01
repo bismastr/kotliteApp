@@ -6,7 +6,9 @@ import android.widget.Toast
 import com.brillante.kotlite.api.ApiConfig
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgRequest
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgResponse
+import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
 import com.brillante.kotlite.data.remote.model.direction.DirectionResponses
+import com.brillante.kotlite.data.remote.model.direction.Route
 import com.brillante.kotlite.data.remote.model.login.LoginRequest
 import com.brillante.kotlite.data.remote.model.login.LoginResponse
 import com.brillante.kotlite.data.remote.model.order.OrderRequest
@@ -52,6 +54,7 @@ class RemoteDataSource {
             }
         })
     }
+
 
     fun loginUser(
         username: String,
@@ -112,7 +115,7 @@ class RemoteDataSource {
             override fun onResponse(call: Call<OrderResponse>, response: Response<OrderResponse>) {
                 if (response.isSuccessful) {
                     val data = response.body()
-                    if (data != null){
+                    if (data != null) {
                         callback.onOrderReceived(data)
                         Toast.makeText(
                             context,
@@ -210,8 +213,8 @@ class RemoteDataSource {
         })
     }
 
-    fun patchPsgArrived(id: Int, callback: PsgAccPatchCallback) {
-        val client = ApiConfig.getWebServices().patchPsgArrived(id)
+    fun patchPsgArrived(id: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchPsgArrived(id, authHeader)
         client.enqueue(object : Callback<PatchResponse> {
             override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
                 if (response.isSuccessful) {
@@ -231,8 +234,8 @@ class RemoteDataSource {
         })
     }
 
-    fun patchPsgStartRide(id: Int, callback: PsgAccPatchCallback) {
-        val client = ApiConfig.getWebServices().patchPsgStartRide(id)
+    fun patchPsgStartRide(id: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchPsgStartRide(id, authHeader)
         client.enqueue(object : Callback<PatchResponse> {
             override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
                 if (response.isSuccessful) {
@@ -252,8 +255,8 @@ class RemoteDataSource {
         })
     }
 
-    fun patchPsgCompleteRide(id: Int, callback: PsgAccPatchCallback) {
-        val client = ApiConfig.getWebServices().patchPsgCompleteRide(id)
+    fun patchPsgCompleteRide(id: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchPsgCompleteRide(id, authHeader)
         client.enqueue(object : Callback<PatchResponse> {
             override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
                 if (response.isSuccessful) {
@@ -273,8 +276,8 @@ class RemoteDataSource {
         })
     }
 
-    fun patchPsgDone(id: Int, callback: PsgAccPatchCallback) {
-        val client = ApiConfig.getWebServices().patchPsgDone(id)
+    fun patchPsgDone(id: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchPsgDone(id, authHeader)
         client.enqueue(object : Callback<PatchResponse> {
             override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
                 if (response.isSuccessful) {
@@ -324,19 +327,24 @@ class RemoteDataSource {
         })
     }
 
-    fun createPsg(request: CreatePsgRequest, authHeader: String, id: Int, callback: OnCreatePsgCallback){
+    fun createPsg(
+        request: CreatePsgRequest,
+        authHeader: String,
+        id: Int,
+        callback: OnCreatePsgCallback
+    ) {
         val client = ApiConfig.getWebServices().createPsg(request, authHeader, id)
-        client.enqueue(object: Callback<CreatePsgResponse> {
+        client.enqueue(object : Callback<CreatePsgResponse> {
             override fun onResponse(
                 call: Call<CreatePsgResponse>,
                 response: Response<CreatePsgResponse>
             ) {
-                if (response.isSuccessful){
+                if (response.isSuccessful) {
                     val data = response.body()
                     if (data != null) {
                         callback.onCreatePsgReceived(data)
                     } else Log.d("CREATE PSG", "DATA NULL")
-                }else Log.d("CREATE PSG", response.code().toString())
+                } else Log.d("CREATE PSG", response.code().toString())
             }
 
             override fun onFailure(call: Call<CreatePsgResponse>, t: Throwable) {
@@ -344,6 +352,61 @@ class RemoteDataSource {
             }
 
         })
+    }
+
+    fun getOnGoingRoute(
+        orderId: Int,
+        authHeader: String,
+        callback: GetOnGoingRouteCallback
+    ) {
+        val client = ApiConfig.getWebServices().getOnGoingRoute(orderId, authHeader)
+        client.enqueue(object : Callback<List<Route>> {
+            override fun onResponse(call: Call<List<Route>>, response: Response<List<Route>>) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    if (data != null) {
+                        callback.onOnGoingRouteReceived(data)
+                    } else Log.d("ON GOING ROUTE", "DATA NULL")
+                } else Log.d("ONGOING ROUTE", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<List<Route>>, t: Throwable) {
+                Log.d("OnGoingRoute", t.toString())
+            }
+
+        })
+
+    }
+
+    fun getDetailDriver(orderId: Int, authHeader: String, callback: GetDetailDriverCallback) {
+        val client = ApiConfig.getWebServices().getDetailOrder(orderId, authHeader)
+        client.enqueue(object : Callback<DetailOrderResponse> {
+            override fun onResponse(
+                call: Call<DetailOrderResponse>,
+                response: Response<DetailOrderResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    if (data != null){
+                        callback.onDetailDriverReceived(data)
+                    } else Log.d("DETAIL", "DATA NULL")
+                } else Log.d("DETAIL", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<DetailOrderResponse>, t: Throwable) {
+                Log.d("DETAIL", t.toString())
+            }
+
+        })
+
+    }
+
+    interface GetDetailDriverCallback {
+        fun onDetailDriverReceived(response: DetailOrderResponse)
+    }
+
+    interface GetOnGoingRouteCallback {
+        fun onOnGoingRouteReceived(response: List<Route>)
     }
 
     interface OnCreatePsgCallback {

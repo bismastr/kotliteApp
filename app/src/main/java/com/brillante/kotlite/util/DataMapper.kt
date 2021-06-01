@@ -56,14 +56,22 @@ object DataMapper {
 
     fun createPsgToEntity(data: CreatePsgResponse): CreatePsgEntity {
         return CreatePsgEntity(
+            data.distance,
+            data.longPick,
+            data.fee,
+            data.longDrop,
+            data.createdAt,
+            data.timeTaken,
+            data.updatedAt,
+            data.latDrop,
+            data.placeDrop,
+            data.placePick,
             data.id,
             data.time,
+            data.latPick,
+            data.user,
             data.status,
-            data.carType,
-            data.totalPsg,
-            data.placeStart,
-            data.placeEnd,
-            data.capacity,
+            data.order
         )
     }
 }

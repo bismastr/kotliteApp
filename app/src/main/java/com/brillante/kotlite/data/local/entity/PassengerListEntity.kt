@@ -1,7 +1,5 @@
 package com.brillante.kotlite.data.local.entity
 
-import com.google.gson.annotations.SerializedName
-
 data class PassengerListEntity(
     val distance: Int,
 

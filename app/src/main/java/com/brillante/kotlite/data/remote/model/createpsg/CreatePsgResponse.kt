@@ -4,41 +4,35 @@ import com.google.gson.annotations.SerializedName
 
 data class CreatePsgResponse(
 
-	@field:SerializedName("income")
-	val income: Int,
+	@field:SerializedName("distance")
+	val distance: Int,
 
-	@field:SerializedName("place_start")
-	val placeStart: String,
+	@field:SerializedName("long_pick")
+	val longPick: String,
 
-	@field:SerializedName("long_end")
-	val longEnd: String,
+	@field:SerializedName("fee")
+	val fee: Int,
 
-	@field:SerializedName("lat_start")
-	val latStart: String,
+	@field:SerializedName("long_drop")
+	val longDrop: String,
 
 	@field:SerializedName("created_at")
 	val createdAt: String,
 
-	@field:SerializedName("long_start")
-	val longStart: String,
-
-	@field:SerializedName("lat_end")
-	val latEnd: String,
-
-	@field:SerializedName("capacity")
-	val capacity: Int,
-
-	@field:SerializedName("car_type")
-	val carType: String,
-
-	@field:SerializedName("place_end")
-	val placeEnd: String,
+	@field:SerializedName("time_taken")
+	val timeTaken: Int,
 
 	@field:SerializedName("updated_at")
 	val updatedAt: String,
 
-	@field:SerializedName("total_psg")
-	val totalPsg: Int,
+	@field:SerializedName("lat_drop")
+	val latDrop: String,
+
+	@field:SerializedName("place_drop")
+	val placeDrop: String,
+
+	@field:SerializedName("place_pick")
+	val placePick: String,
 
 	@field:SerializedName("id")
 	val id: Int,
@@ -46,9 +40,15 @@ data class CreatePsgResponse(
 	@field:SerializedName("time")
 	val time: String,
 
+	@field:SerializedName("lat_pick")
+	val latPick: String,
+
 	@field:SerializedName("user")
 	val user: Int,
 
 	@field:SerializedName("status")
-	val status: String
+	val status: String,
+
+	@field:SerializedName("order")
+	val order: Int
 )

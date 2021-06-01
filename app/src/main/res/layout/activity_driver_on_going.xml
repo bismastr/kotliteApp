@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.driver.ongoing.DriverOnGoingActivity">
 
+    <fragment
+        android:id="@+id/map_on_going"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="550dp"
+        tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/statusBottomSheet"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/primaryColor"
         app:behavior_hideable="false"
         app:behavior_peekHeight="200dp"
         app:layout_behavior="@string/bottom_sheet_behavior">
@@ -18,18 +26,48 @@
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/app_name"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/your_passanger_status"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto"
+            android:text="@string/don_t_forget_to_notify_your_passanger"
+            android:textSize="12sp"
+            android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_ongoing_psg"
             android:layout_width="match_parent"
             android:layout_height="600dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView2"
-            tools:listitem="@layout/item_psg" />
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            tools:listitem="@layout/item_psg_on_going" />
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_finish_ride"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/primaryColor"
+            android:backgroundTint="@color/secondaryColor"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:text="@string/finish_ride"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/rv_ongoing_psg" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

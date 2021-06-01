@@ -1,5 +1,6 @@
 package com.brillante.kotlite.ui.passenger.driverList
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -12,6 +13,7 @@ import com.brillante.kotlite.data.remote.model.recomendation.RecommendationReque
 import com.brillante.kotlite.databinding.ActivityDriverListBinding
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.passenger.driverList.adapter.DriverListAdapter
+import com.brillante.kotlite.ui.passenger.ongoing.PassengerOnGoingActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 
 class DriverListActivity : AppCompatActivity() {
@@ -38,6 +40,7 @@ class DriverListActivity : AppCompatActivity() {
         driverListViewModel = ViewModelProvider(this, factory)[DriverListViewModel::class.java]
         setupRecyclerView(driverRequest)
         setOnClickCallback()
+
     }
 
     private fun setOnClickCallback() {
@@ -45,7 +48,9 @@ class DriverListActivity : AppCompatActivity() {
             override fun onChooseClicked(data: RecommendationsItemEntity) {
                 driverListViewModel.createPsg(psgDataEntity, authHeader, data.id).observe(this@DriverListActivity, {Psg ->
                     if(Psg != null){
-                        Log.d("Create Passenger", "DONE")
+                        val intent = Intent(this@DriverListActivity, PassengerOnGoingActivity::class.java)
+                        intent.putExtra("PSG", Psg)
+                        startActivity(intent)
                     }
                 })
             }
