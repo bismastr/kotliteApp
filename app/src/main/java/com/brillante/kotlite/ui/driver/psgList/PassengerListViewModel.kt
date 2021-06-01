@@ -15,8 +15,11 @@ class PassengerListViewModel(private val repository: Repository) : ViewModel() {
         return repository.getAccPsgList(7, authHeader)
     }
 
-    fun patchAccPsg(id: Int): LiveData<Boolean> {
-        return repository.patchAccPsg(7)
+    fun patchAccPsg(id: Int, authHeader: String): LiveData<Boolean> {
+        return repository.patchAccPsg(id, authHeader)
     }
 
+    fun patchArriving(orderId: Int, authHeader: String): LiveData<Boolean> {
+        return repository.patchArriving(orderId, authHeader)
+    }
 }

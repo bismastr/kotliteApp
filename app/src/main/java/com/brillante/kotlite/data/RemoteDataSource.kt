@@ -7,6 +7,7 @@ import com.brillante.kotlite.api.ApiConfig
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgRequest
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgResponse
 import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
+import com.brillante.kotlite.data.remote.model.detailpsg.DetailPsgResponse
 import com.brillante.kotlite.data.remote.model.direction.DirectionResponses
 import com.brillante.kotlite.data.remote.model.direction.Route
 import com.brillante.kotlite.data.remote.model.login.LoginRequest
@@ -192,8 +193,8 @@ class RemoteDataSource {
     }
 
     //patch
-    fun patchPsgAcc(id: Int, callback: PsgAccPatchCallback) {
-        val client = ApiConfig.getWebServices().patchPsgAcc(id)
+    fun patchPsgAcc(id: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchPsgAcc(id, authHeader)
         client.enqueue(object : Callback<PatchResponse> {
             override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
                 if (response.isSuccessful) {
@@ -401,6 +402,53 @@ class RemoteDataSource {
 
     }
 
+    fun getDetailPsg(psgId: Int, authHeader: String, callback: GetDetailPsgCallback) {
+        val client = ApiConfig.getWebServices().getDetailPsg(psgId, authHeader)
+        client.enqueue(object : Callback<DetailPsgResponse> {
+            override fun onResponse(
+                call: Call<DetailPsgResponse>,
+                response: Response<DetailPsgResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val data = response.body()
+                    if (data != null){
+                        callback.onDetailPsgReceived(data)
+                    } else Log.d("PSGDETAIL", "DATA NULL")
+                }else Log.d("PSGDETAIL", response.code().toString())
+            }
+
+            override fun onFailure(call: Call<DetailPsgResponse>, t: Throwable) {
+                Log.d("PSGDETAIL", t.toString())
+            }
+
+        })
+    }
+
+    fun patchArriving(orderId: Int, authHeader: String, callback: PsgAccPatchCallback) {
+        val client = ApiConfig.getWebServices().patchArriving(orderId, "Bearer $authHeader")
+        client.enqueue(object : Callback<PatchResponse> {
+            override fun onResponse(call: Call<PatchResponse>, response: Response<PatchResponse>) {
+                if (response.isSuccessful) {
+                    Log.d("PATCH ARRIVING", "SUCCESS")
+                    callback.onPsgAccReceived(true)
+                } else {
+                    callback.onPsgAccReceived(true)
+                    Log.d("PATCH ARRIVING", response.code().toString())
+                }
+            }
+
+            override fun onFailure(call: Call<PatchResponse>, t: Throwable) {
+                Log.d("PATCH ARRIVING", t.toString())
+            }
+
+        })
+    }
+
+
+    interface GetDetailPsgCallback {
+        fun onDetailPsgReceived(response: DetailPsgResponse)
+    }
+
     interface GetDetailDriverCallback {
         fun onDetailDriverReceived(response: DetailOrderResponse)
     }
@@ -416,7 +464,6 @@ class RemoteDataSource {
     interface PostRecommendationCallback {
         fun onRecommendationReceived(list: List<RecommendationsItem>, psgData: PsgData)
     }
-
 
     interface PsgAccPatchCallback {
         fun onPsgAccReceived(isSuccess: Boolean)

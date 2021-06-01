@@ -10,6 +10,7 @@ import com.brillante.kotlite.data.local.entity.*
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgRequest
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgResponse
 import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
+import com.brillante.kotlite.data.remote.model.detailpsg.DetailPsgResponse
 import com.brillante.kotlite.data.remote.model.direction.DirectionResponses
 import com.brillante.kotlite.data.remote.model.direction.Route
 import com.brillante.kotlite.data.remote.model.order.OrderResponse
@@ -210,9 +211,9 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
     }
 
     //patch
-    override fun patchAccPsg(id: Int): LiveData<Boolean> {
+    override fun patchAccPsg(id: Int, authHeader: String): LiveData<Boolean> {
         val patchAcc = MutableLiveData<Boolean>()
-        remoteDataSource.patchPsgAcc(id, object : RemoteDataSource.PsgAccPatchCallback {
+        remoteDataSource.patchPsgAcc(id, "Bearer $authHeader", object : RemoteDataSource.PsgAccPatchCallback {
             override fun onPsgAccReceived(isSuccess: Boolean) {
                 patchAcc.postValue(isSuccess)
             }
@@ -336,12 +337,26 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
         return patchAcc
     }
 
+    override fun patchArriving(orderId: Int, authHeader: String): LiveData<Boolean> {
+        val patchArriving = MutableLiveData<Boolean>()
+        remoteDataSource.patchArriving(
+            orderId,
+            "Bearer $authHeader",
+            object : RemoteDataSource.PsgAccPatchCallback {
+                override fun onPsgAccReceived(isSuccess: Boolean) {
+                    patchArriving.postValue(isSuccess)
+                }
+
+            }
+        )
+        return patchArriving
+    }
+
     override fun recommendation(
         request: RecommendationRequest,
         authHeader: String
     ): LiveData<RecommendationEntity> {
         val recommendationResult = MutableLiveData<RecommendationEntity>()
-
         remoteDataSource.postRecommendation(
             request, "Bearer $authHeader",
             object : RemoteDataSource.PostRecommendationCallback {
@@ -349,14 +364,12 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                     list: List<RecommendationsItem>,
                     psgData: PsgData
                 ) {
-
                     val data = RecommendationEntity(
                         psgData = DataMapper.psgDataToEntity(psgData),
                         recommendations = DataMapper.driverListToEntity(list)
                     )
                     recommendationResult.postValue(data)
                 }
-
             })
         return recommendationResult
     }
@@ -391,6 +404,16 @@ class Repository private constructor(private val remoteDataSource: RemoteDataSou
                 }
             })
         return createPsgResult
+    }
+
+    override fun getDetailPsg(psgId: Int, authHeader: String): LiveData<DetailPsgResponse> {
+        val detailResult = MutableLiveData<DetailPsgResponse>()
+        remoteDataSource.getDetailPsg(psgId, "Bearer $authHeader", object : RemoteDataSource.GetDetailPsgCallback {
+            override fun onDetailPsgReceived(response: DetailPsgResponse) {
+                detailResult.postValue(response)
+            }
+        })
+        return detailResult
     }
 
 

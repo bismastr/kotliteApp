@@ -13,7 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Kotlite"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ui.passenger.ongoing.PassengerOnGoingActivity"></activity>
+        <activity android:name=".ui.passenger.ongoing.PassengerOnGoingActivity">
+
+        </activity>
         <activity android:name=".ui.driver.invoce.DriverInvoiceActivity"></activity>
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>

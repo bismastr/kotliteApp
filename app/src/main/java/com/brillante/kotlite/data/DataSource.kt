@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import com.brillante.kotlite.data.local.entity.*
 import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
+import com.brillante.kotlite.data.remote.model.detailpsg.DetailPsgResponse
 import com.brillante.kotlite.data.remote.model.recomendation.RecommendationRequest
 import com.brillante.kotlite.preferences.SessionManager
 import com.google.android.gms.maps.GoogleMap
@@ -32,7 +33,7 @@ interface DataSource {
 
     fun getPsgList(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>>
     fun getAccPsgList(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>>
-    fun patchAccPsg(id: Int): LiveData<Boolean>
+    fun patchAccPsg(id: Int, authHeader: String): LiveData<Boolean>
     fun getOnGoingRoute(orderId: Int, authHeader: String, map: GoogleMap)
     fun getDetailDriver(orderId: Int, authHeader: String): LiveData<DetailDriverEntity>
 
@@ -41,6 +42,7 @@ interface DataSource {
     fun patchPsgStartRide(id: Int, authHeader: String): LiveData<Boolean>
     fun patchPsgCompleteRide(id: Int, authHeader: String): LiveData<Boolean>
     fun patchPsgDone(id: Int, authHeader: String): LiveData<Boolean>
+    fun patchArriving(orderId: Int, authHeader: String): LiveData<Boolean>
 
     //passenger
     fun recommendation(
@@ -53,4 +55,6 @@ interface DataSource {
         authHeader: String,
         orderId: Int
     ): LiveData<CreatePsgEntity>
+
+    fun getDetailPsg(psgId: Int, authHeader: String): LiveData<DetailPsgResponse>
 }

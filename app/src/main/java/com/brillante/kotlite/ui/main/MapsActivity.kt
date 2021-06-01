@@ -78,7 +78,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         var bottomSheetFragment: TimePickerFragment
         binding.btnSchedule.setOnClickListener {
             bottomSheetFragment =
-                TimePickerFragment(pickupLocation, destinationLocation, carType, carCapacity, from)
+                TimePickerFragment().apply { inject(pickupLocation, destinationLocation, carType, carCapacity, from) }
             bottomSheetFragment.show(supportFragmentManager, "ScheduleBottomSheet")
         }
 

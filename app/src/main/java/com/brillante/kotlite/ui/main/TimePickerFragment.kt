@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
+import com.brillante.kotlite.R
 import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
 import com.brillante.kotlite.data.remote.model.recomendation.RecommendationRequest
 import com.brillante.kotlite.preferences.SessionManager
@@ -22,14 +23,14 @@ import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TimePickerFragment(
-    private val pickupLatLng: LatLng?,
-    private val destinationLatLng: LatLng?,
-    private val carType: String,
-    private val carCapacity: String,
-    private val from: Int
+class TimePickerFragment() : BottomSheetDialogFragment() {
 
-) : BottomSheetDialogFragment() {
+    private var pickupLatLng: LatLng? = null
+    private var destinationLatLng: LatLng? = null
+    private lateinit var carType: String
+    private lateinit var carCapacity: String
+    private var from: Int = 0
+
     private var _binding: BottomsheetFragmentBinding? = null
     private val binding get() = _binding as BottomsheetFragmentBinding
 
@@ -70,6 +71,19 @@ class TimePickerFragment(
         sessionManager = SessionManager(requireContext())
     }
 
+    fun inject(
+        pickupLatLng: LatLng?,
+        destinationLatLng: LatLng?,
+        carType: String,
+        carCapacity: String,
+        from: Int,
+    ) {
+        this.pickupLatLng = pickupLatLng
+        this.destinationLatLng = destinationLatLng
+        this.carCapacity = carCapacity
+        this.carType = carType
+        this.from = from
+    }
     private fun createPsg() {
         val latPick = pickupLatLng?.latitude.toString()
         val longPick = pickupLatLng?.longitude.toString()

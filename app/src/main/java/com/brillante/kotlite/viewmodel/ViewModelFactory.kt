@@ -9,6 +9,7 @@ import com.brillante.kotlite.ui.driver.invoce.DriverInvoiceViewModel
 import com.brillante.kotlite.ui.driver.ongoing.PassengerOnGoingViewModel
 import com.brillante.kotlite.ui.driver.psgList.PassengerListViewModel
 import com.brillante.kotlite.ui.passenger.driverList.DriverListViewModel
+import com.brillante.kotlite.ui.passenger.ongoing.PsgOnGoingViewModel
 import com.brillante.kotlite.util.Injection
 
 class ViewModelFactory private constructor(private val mRepository: Repository) :
@@ -48,6 +49,9 @@ class ViewModelFactory private constructor(private val mRepository: Repository) 
             }
             modelClass.isAssignableFrom(DriverInvoiceViewModel::class.java)-> {
                 DriverInvoiceViewModel(mRepository) as T
+            }
+            modelClass.isAssignableFrom(PsgOnGoingViewModel::class.java)->{
+                PsgOnGoingViewModel(mRepository) as T
             }
             else -> throw Throwable("Unknown ViewModel class: " + modelClass.name)
         }

@@ -3,6 +3,7 @@ package com.brillante.kotlite.api
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgRequest
 import com.brillante.kotlite.data.remote.model.createpsg.CreatePsgResponse
 import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
+import com.brillante.kotlite.data.remote.model.detailpsg.DetailPsgResponse
 import com.brillante.kotlite.data.remote.model.direction.DirectionResponses
 import com.brillante.kotlite.data.remote.model.direction.Route
 import com.brillante.kotlite.data.remote.model.login.LoginRequest
@@ -38,9 +39,10 @@ interface ApiService {
     fun getListPsg(@Path("id") orderId: Int, @Header("Authorization") authHeader: String): Call<List<PassengerListResponseItem>>
     @GET("/passengers/list/{id}/")
     fun getAccPsgList(@Path("id") orderId: Int, @Header("Authorization") authHeader: String): Call<List<PassengerListResponseItem>>
-    //TODO arriving
+    @PATCH("/drivers/riding/{orderId}/")
+    fun patchArriving(@Path("orderId") orderId: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
     @PATCH("/passengers/accepted/{id}/")
-    fun patchPsgAcc(@Path("id") id: Int): Call<PatchResponse>
+    fun patchPsgAcc(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
     @GET("/drivers/route/{idOrder}/")
     fun getOnGoingRoute(@Path("idOrder") orderId: Int, @Header("Authorization") authHeader: String): Call<List<Route>>
     @GET ("/drivers/detail/{idOrder}/")
@@ -59,6 +61,9 @@ interface ApiService {
         @Header("Authorization") authHeader: String,
         @Path("id") id: Int
     ): Call<CreatePsgResponse>
+
+    @GET("/passengers/detail/{psgId}/")
+    fun getDetailPsg(@Path("psgId") orderId: Int, @Header("Authorization") authHeader: String): Call<DetailPsgResponse>
 
     //patch status passenger
     @PATCH("/passengers/arrived/{id}/")

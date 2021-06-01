@@ -2,17 +2,19 @@
     <!-- Base application theme. -->
     <style name="Theme.Kotlite" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primaryColor</item>
-        <item name="colorPrimaryVariant">@color/primaryLightColor</item>
-        <item name="colorPrimaryDark">@color/primaryDarkColor</item>
+        <item name="colorPrimary">@color/secondaryColor</item>
+        <item name="colorPrimaryVariant">@color/secondaryLightColor</item>
+        <item name="colorPrimaryDark">@color/secondaryDarkColor</item>
         <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/secondaryColor</item>
-        <item name="colorSecondaryVariant">@color/secondaryLightColor</item>
-        <item name="colorOnSecondary">@color/secondaryTextColor</item>
+        <item name="colorSecondary">@color/primaryColor</item>
+        <item name="colorSecondaryVariant">@color/primaryLightColor</item>
+        <item name="colorOnSecondary">@color/primaryTextColor</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
+        <item name="android:datePickerDialogTheme">@style/Dialog.Theme</item>
+        <item name="android:timePickerDialogTheme">@style/Dialog.Theme</item>
 
     </style>
 
@@ -20,5 +22,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSizeTopRight">20dp</item>
         <item name="cornerSizeTopLeft">20dp</item>
+    </style>
+
+    <style name="Dialog.Theme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/secondaryColor</item>
+        <item name="colorAccent">@color/secondaryDarkColor</item>
     </style>
 </resources>

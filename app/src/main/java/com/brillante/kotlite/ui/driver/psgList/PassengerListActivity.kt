@@ -39,23 +39,29 @@ class PassengerListActivity : AppCompatActivity() {
             orderId = order.id
         }
         //fragment pending list
-        val pendingListFragment = PendingListFragment(orderId)
+        val pendingListFragment = PendingListFragment().apply { inject(orderId) {
+            if (it == PendingListFragment.Status.ACCEPTED){
+                getData()
+            }
+        } }
         binding.btnPendingList.setOnClickListener {
             pendingListFragment.show(supportFragmentManager, "PendingList")
         }
         //clickBtnRide
         binding.btnRide.setOnClickListener {
-            val intent = Intent(this, DriverOnGoingActivity::class.java)
-            intent.putExtra("ORDER", order)
-            startActivity(intent)
+            passengerListViewModel.patchArriving(orderId, authHeader).observe(this, {Arriving ->
+                if (Arriving){
+                    val intent = Intent(this, DriverOnGoingActivity::class.java)
+                    intent.putExtra("ORDER", order)
+                    startActivity(intent)
+                }
+            })
+
         }
         //viewmodel
         val factory = ViewModelFactory.getInstance()
         passengerListViewModel =
             ViewModelProvider(this, factory)[PassengerListViewModel::class.java]
-
-
-
 
         setupRecyclerView()
     }
@@ -67,7 +73,6 @@ class PassengerListActivity : AppCompatActivity() {
         binding.rvAcceptedList.adapter = adapterPsgList
         getData()
     }
-
 
     private fun getData() {
         passengerListViewModel.getAccListPsg(orderId, authHeader).observe(this, { Psg ->

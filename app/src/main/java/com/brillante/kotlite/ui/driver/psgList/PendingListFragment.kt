@@ -16,7 +16,9 @@ import com.brillante.kotlite.ui.driver.psgList.adapter.PsgListAdapter
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class PendingListFragment(private var orderId: Int) : BottomSheetDialogFragment() {
+class PendingListFragment : BottomSheetDialogFragment() {
+    private var orderId: Int = 0
+    private var onStatusPatch: ((Status) -> Unit)? = null
     private var _binding: FragmentPendingListBinding? = null
     private val binding get() = _binding as FragmentPendingListBinding
     private lateinit var passengerListViewModel: PassengerListViewModel
@@ -46,6 +48,14 @@ class PendingListFragment(private var orderId: Int) : BottomSheetDialogFragment(
         setOnClickCallback()
     }
 
+    fun inject(
+        orderId: Int,
+        onStatusPatch: ((Status) -> Unit)?
+    ) {
+        this.orderId = orderId
+        this.onStatusPatch = onStatusPatch
+    }
+
     private fun setupRecyclerView() {
         adapterPsgList = PsgListAdapter()
         binding.rvPendingList.layoutManager =
@@ -57,18 +67,24 @@ class PendingListFragment(private var orderId: Int) : BottomSheetDialogFragment(
     private fun setOnClickCallback() {
         adapterPsgList.setOnItemCLickCallback(object : PsgListAdapter.OnClickCallback {
             override fun onAccClicked(data: PassengerListEntity, position: Int) {
-                passengerListViewModel.patchAccPsg(data.id)
+                passengerListViewModel.patchAccPsg(data.id, authHeader)
                 adapterPsgList.dataList.removeAt(position)
                 adapterPsgList.notifyItemRemoved(position)
                 adapterPsgList.notifyItemRangeChanged(position, adapterPsgList.dataList.size)
+                onStatusPatch?.invoke(Status.ACCEPTED)
             }
 
             override fun onDeniedClicked(data: PassengerListEntity, position: Int) {
                 Toast.makeText(requireContext(), "DENIED CLICKED", Toast.LENGTH_SHORT).show()
+                onStatusPatch?.invoke(Status.DENIED)
             }
 
         })
 
+    }
+
+    enum class Status {
+        ACCEPTED, DENIED
     }
 
     private fun getPsgList() {
