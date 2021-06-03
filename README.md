@@ -41,10 +41,10 @@
   <p align="center">
     A Part of Kotlite Ridesharing Application
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Explore the Projects »</strong></a>
+    <a href="https://github.com/dzaarsyd/B21-CAP0176"><strong>Explore the Projects »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name">APK Demo</a>
+    <a href="#">APK Demo</a>
     ·
     <a href="https://github.com/bismastr/kotliteApp/issues">Report Bug</a>
     ·
@@ -66,7 +66,14 @@
       <a href="#getting-started">Getting Started</a>
       <ul>
         <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
+        <li><a href="#installation-project">Installation Project</a></li>
+      </ul>
+    </li>
+    <li><a href="#application">Application</a>
+    <ul>
+        <li><a href="#minimum-requirements">Minimum Requirements</a></li>
+        <li><a href="#feature">Feature</a></li>
+        <li><a href="#usage-of-apps">Usage of Apps</a></li>
       </ul>
     </li>
     <li><a href="#usage">Usage</a></li>
@@ -147,9 +154,11 @@ This project requires several resources to be prepared and installed on the loca
 
 ## Application
 
-**Nanti ada architecture Review**
+![workflow](assets/workflow_kotlite.jpg)
 
-This is the place to explain from the architecture review image, for example [here](https://github.com/hypertrack/ridesharing-android#architecture-review).
+<p align="center">
+  <img src="assets/splash.png" height="500"></img>&nbsp; &nbsp;<img src="assets/home.png" height="500">&nbsp; &nbsp;<img src="assets/recom_list.png" height="500">
+</p>
 
 ### Minimum Requirements
 
@@ -175,7 +184,43 @@ This is the place to explain from the architecture review image, for example [he
 
 ### Usage of Apps
 
-**DISINI TEMPAT TUTORIALNYA CARA PAKAI APPSNYA**
+#### Driver
+
+1. Login
+2. Choose Role Driver
+3. Add your car information (Car Type and Capacity)
+4. Set Your Destination Location
+5. Set Your Start Location
+6. Schedule your Ride
+   - Add Date
+   - Add Time
+7. Book Ride
+8. Wait for passenger potential passenger
+9. Acc or Deny any passenger in you Pending List
+10. When your capacity is full of passenger you can wait until the schduled time
+11. Ride Now
+12. Pickup passenger you can use the help of google map using the map button
+13. when you already arrived click the button to notify the passenger
+14. this apply to Start ride, complete ride, and done.
+15. when you all finished
+16. click finish ride to end the ride
+17. Good job you already finish your first ride!
+
+#### Passenger
+
+1. Login
+2. Choose Role Passenger
+3. Set Your Destination Location
+4. Set your start location
+5. Schedule your ride
+   - Add time
+   - Add date
+6. Book Ride
+7. Chose driver inside recommendation list (these driver will have the same route with you :D)
+8. Wait until the scheduled time and Get your self ready for the ride
+9. You will get notified when the driver is Arriving, Arrived, Start Ride, Complete Ride,
+10. When the ride is done you will be automaticly send to invoice
+11. Good job you already finish your first ride using KotLite
 
 <!-- CONTRIBUTING -->
 
@@ -189,21 +234,25 @@ We are excited to see what amazing feature you build in your application using t
 
 ## License
 
-Distributed under the MIT License. See `LICENSE.md` for more information.
+Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 <!-- CONTACT -->
 
 ## Contact
 
-How can we help you? While we're occupied for the Capstone Project, there are simpler ways for us to get in touch! Please do visit us at
+How can we help you? While we're occupied for the Capstone Project, there are simpler ways for us to get in touch! Please do visit us at [here](https://github.com/dzaarsyd/B21-CAP0176#team-members)
+
+## Other Project
+
+You can also looking up our other repository in this project by this [**link**](https://github.com/dzaarsyd/B21-CAP0176).
 
 <!-- ACKNOWLEDGEMENTS -->
 
 ## Acknowledgements
 
-- [Bangkit Academy 2021]()
-- []()
-- []()
+<p align="center">
+  <img src="assets/bangkit.png" height="200"></img>&nbsp; &nbsp;<img src="assets/brillante_logos.png" height="200">
+</p>
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
