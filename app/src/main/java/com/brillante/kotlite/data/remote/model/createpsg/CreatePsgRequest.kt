@@ -1,6 +1,5 @@
 package com.brillante.kotlite.data.remote.model.createpsg
 
-import com.google.android.libraries.places.api.model.Place
 import com.google.gson.annotations.SerializedName
 
 data class CreatePsgRequest(

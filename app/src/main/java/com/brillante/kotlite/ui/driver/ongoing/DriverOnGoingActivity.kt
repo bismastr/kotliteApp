@@ -1,6 +1,7 @@
 package com.brillante.kotlite.ui.driver.ongoing
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -163,6 +164,15 @@ class DriverOnGoingActivity : AppCompatActivity(), OnMapReadyCallback {
                             ).show()
                         }
                     })
+            }
+
+            override fun onDirectionClicked(data: PassengerListEntity, holder: OnGoingViewHolder) {
+                val psgPickupLocation = data.latPick + "," + data.longPick
+                val gmmIntentUri =
+                    Uri.parse("google.navigation:q=$psgPickupLocation")
+                val mapIntent = Intent(Intent.ACTION_VIEW, gmmIntentUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
             }
 
         })

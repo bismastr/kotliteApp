@@ -3,11 +3,11 @@ package com.brillante.kotlite.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.brillante.kotlite.data.Repository
-import com.brillante.kotlite.ui.login.LoginViewModel
 import com.brillante.kotlite.ui.MapViewModel
 import com.brillante.kotlite.ui.driver.invoce.DriverInvoiceViewModel
 import com.brillante.kotlite.ui.driver.ongoing.PassengerOnGoingViewModel
 import com.brillante.kotlite.ui.driver.psgList.PassengerListViewModel
+import com.brillante.kotlite.ui.login.LoginViewModel
 import com.brillante.kotlite.ui.passenger.driverList.DriverListViewModel
 import com.brillante.kotlite.ui.passenger.ongoing.PsgOnGoingViewModel
 import com.brillante.kotlite.util.Injection

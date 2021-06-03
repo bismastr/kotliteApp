@@ -24,6 +24,6 @@ class PassengerOnGoingViewModel(private val repository: Repository) : ViewModel(
     }
 
     fun getRoute(orderId: Int, authHeader: String, map: GoogleMap){
-        return repository.getOnGoingRoute(orderId = 7, authHeader, map)
+        return repository.getOnGoingRoute(orderId = 59, authHeader, map)
     }
 }

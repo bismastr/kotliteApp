@@ -3,7 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your Passenger Pending List"
+        android:fontFamily="@font/roboto_bold"
+        android:textSize="24sp"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/primaryTextColor"
+        android:layout_marginStart="15dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content"
+        android:text="Accept or deny potential passenger"
+        android:fontFamily="@font/roboto"
+        android:textSize="12sp"
+        android:layout_marginStart="15dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_pending_list"

@@ -6,19 +6,22 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".ui.driver.info.DriverInfoActivity">
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/car_info"
-        android:layout_margin="36dp"
-        android:contentDescription="@string/informasi_kendaraan" />
+        android:layout_marginTop="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_margin="24dp"
-        android:fontFamily="@font/comfortaa_bold"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/primaryTextColor"
         android:text="@string/isi_informasi_kendaraan_mu"
         android:textSize="24sp" />
 
@@ -46,7 +49,7 @@
         android:layout_gravity="center_horizontal"
         app:startIconDrawable="@drawable/ic_baseline_people_alt_24"
         app:placeholderText="Capacity"
-        android:hint="@string/kapasitas_kendaraan_mu">
+        android:hint="@string/car_capacity">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtText_carCapacity"
@@ -58,13 +61,15 @@
         android:id="@+id/btn_selesai"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="80dp"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
+        app:cornerRadius="10dp"
         android:layout_marginBottom="20dp"
-        android:backgroundTint="@color/black"
+        android:backgroundTint="@color/secondaryColor"
         android:text="@string/selesai"
-        android:fontFamily="@font/montserrat_light"
+        android:textColor="@color/primaryColor"
+        android:fontFamily="@font/roboto"
         android:textStyle="bold"/>
 
 </LinearLayout>

@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.brillante.kotlite.data.local.entity.PassengerListEntity
 import com.brillante.kotlite.databinding.ItemPsgOnGoingBinding
-import com.brillante.kotlite.ui.driver.psgList.adapter.PsgListAdapter
 
 class OnGoingAdapter : RecyclerView.Adapter<OnGoingViewHolder>() {
     private var onItemCLickCallback: OnClickCallback? = null
@@ -49,6 +48,10 @@ class OnGoingAdapter : RecyclerView.Adapter<OnGoingViewHolder>() {
         holder.btnDone.setOnClickListener {
             onItemCLickCallback?.onDoneClicked(dataList[position], holder)
         }
+
+        holder.btnDirection.setOnClickListener {
+            onItemCLickCallback?.onDirectionClicked(dataList[position], holder)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -60,5 +63,6 @@ class OnGoingAdapter : RecyclerView.Adapter<OnGoingViewHolder>() {
         fun onStartRideClicked(data: PassengerListEntity, holder: OnGoingViewHolder)
         fun onCompleteRideClicked(data: PassengerListEntity, holder: OnGoingViewHolder)
         fun onDoneClicked(data: PassengerListEntity, holder: OnGoingViewHolder)
+        fun onDirectionClicked(data: PassengerListEntity, holder: OnGoingViewHolder)
     }
 }

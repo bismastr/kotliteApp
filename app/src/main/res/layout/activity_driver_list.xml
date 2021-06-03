@@ -1,9 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.passenger.driverList.DriverListActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/recommendation_list"
+        android:fontFamily="@font/roboto_medium"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="24sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/here_s_driver_that_have_the_same_route_with_you"
+        android:fontFamily="@font/roboto"
+        android:textColor="@color/primaryTextColor"
+        android:textSize="12sp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="16dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_driver_list"
@@ -11,4 +33,4 @@
         android:layout_height="wrap_content"
         tools:listitem="@layout/item_driver" />
 
-</RelativeLayout>
+</LinearLayout>

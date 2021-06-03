@@ -6,6 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".ui.passenger.ongoing.PassengerOnGoingActivity">
 
+    <fragment
+        android:id="@+id/map_passenger_ongoing"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="600dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/statusBottomSheet"
         android:layout_width="match_parent"
@@ -46,7 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
             android:fontFamily="@font/roboto"
-            android:text="07:00"
+            android:text="@string/_07_00"
             android:textSize="12sp"
             app:layout_constraintStart_toEndOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
@@ -81,6 +87,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginTop="4dp"
             android:text="@string/arriving"
+            android:fontFamily="@font/roboto"
+            android:textColor="@color/secondaryColor"
             app:layout_constraintStart_toEndOf="@+id/img_profile"
             app:layout_constraintTop_toBottomOf="@+id/tv_driver_name" />
 

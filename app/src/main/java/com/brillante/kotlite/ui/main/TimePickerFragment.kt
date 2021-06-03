@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
-import com.brillante.kotlite.R
-import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
 import com.brillante.kotlite.data.remote.model.recomendation.RecommendationRequest
+import com.brillante.kotlite.databinding.BottomsheetFragmentBinding
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
 import com.brillante.kotlite.ui.driver.psgList.PassengerListActivity
@@ -23,7 +22,7 @@ import com.google.android.material.timepicker.TimeFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-class TimePickerFragment() : BottomSheetDialogFragment() {
+class TimePickerFragment : BottomSheetDialogFragment() {
 
     private var pickupLatLng: LatLng? = null
     private var destinationLatLng: LatLng? = null
@@ -62,7 +61,7 @@ class TimePickerFragment() : BottomSheetDialogFragment() {
             if (from == 0) {
                 createOrder(carCapacity, carType)
 
-            } else if(from == 1){
+            } else if (from == 1) {
                 createPsg()
             }
 
@@ -84,6 +83,7 @@ class TimePickerFragment() : BottomSheetDialogFragment() {
         this.carType = carType
         this.from = from
     }
+
     private fun createPsg() {
         val latPick = pickupLatLng?.latitude.toString()
         val longPick = pickupLatLng?.longitude.toString()
@@ -116,11 +116,13 @@ class TimePickerFragment() : BottomSheetDialogFragment() {
         picker.addOnPositiveButtonClickListener {
             val calendarDate = Calendar.getInstance()
             calendarDate.timeInMillis = picker.selection!!
-            val month = getAbbreviatedFromDateTime(calendarDate,"MM")
-            val day=getAbbreviatedFromDateTime(calendarDate,"d")
-            val year=getAbbreviatedFromDateTime(calendarDate,"yyyy")
+            val month = getAbbreviatedFromDateTime(calendarDate, "MM")
+            val monthText = getAbbreviatedFromDateTime(calendarDate, "MMM")
+            val day = getAbbreviatedFromDateTime(calendarDate, "d")
+            val year = getAbbreviatedFromDateTime(calendarDate, "yyyy")
             datePickup = "$day-$month-$year"
-            binding.tvDate.text = datePickup
+            val datePickupText = "$day $monthText"
+            binding.tvDate.text = datePickupText
         }
 
     }

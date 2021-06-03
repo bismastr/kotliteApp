@@ -13,7 +13,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="20dp"
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -29,8 +29,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_marginStart="20dp"
-                android:fontFamily="@font/comfortaa_bold"
-                android:text="@string/welcome"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/roboto"
+                android:text="Where you wanna go today?"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
 
@@ -41,17 +42,9 @@
                 android:layout_below="@+id/tv_welcome"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="5dp"
-                android:fontFamily="@font/montserrat_light"
-                android:text="@string/welcome_user"
+                android:fontFamily="@font/roboto_light"
+                android:text="@string/set_your_destination"
                 android:textSize="15sp" />
-
-            <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_below="@+id/tv_welcome"
-                android:layout_marginStart="5dp"
-                android:layout_toEndOf="@+id/tv_welcome_user"
-                android:src="@drawable/smile_icon" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_autocomplete"
@@ -60,7 +53,7 @@
                 android:layout_below="@+id/tv_welcome_user"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="16dp"
-                app:cardCornerRadius="16dp">
+                app:cardCornerRadius="10dp">
 
                 <fragment
                     android:id="@+id/autocomplete_fragment"
@@ -79,71 +72,58 @@
     </androidx.cardview.widget.CardView>
 
     <!--    Map -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_container_map"
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="20dp"
-        app:cardCornerRadius="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_welcome">
+        android:layout_height="match_parent"
+        tools:context=".ui.main.MapsActivity" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <fragment
-                android:id="@+id/map"
-                android:name="com.google.android.gms.maps.SupportMapFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                tools:context=".ui.main.MapsActivity" />
-
-            <ImageView
-                android:id="@+id/img_marker"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:contentDescription="@string/app_name"
-                android:src="@drawable/ic_marker"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </RelativeLayout>
-
-
-    </androidx.cardview.widget.CardView>
-    <!--    Set Location-->
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_setlocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/set_location"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/btn_schedule"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_container_map" />
-
-    <!--Bottom Nav-->
-    <Button
-        android:id="@+id/btn_schedule"
-        android:layout_width="wrap_content"
+    <ImageView
+        android:id="@+id/img_marker"
+        android:layout_width="50dp"
         android:layout_height="50dp"
-        android:text="@string/schedule_your_ride"
-        android:visibility="visible"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_marker"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_container_map"
-        app:layout_constraintVertical_bias="0.884" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <!--    Set Location-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_setlocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/secondaryLightColor"
+        android:text="@string/set_pickup_location"
+        android:textColor="@color/primaryColor"
+        android:visibility="gone"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_schedule"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--Bottom Nav-->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_schedule"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="28dp"
+        android:backgroundTint="@color/secondaryColor"
+        android:fontFamily="@font/roboto_medium"
+        android:text="@string/schedule_your_ride"
+        android:textColor="@color/primaryColor"
+        android:visibility="visible"
+        app:cornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

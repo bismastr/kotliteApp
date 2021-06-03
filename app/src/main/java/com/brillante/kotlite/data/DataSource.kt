@@ -3,7 +3,6 @@ package com.brillante.kotlite.data
 import android.content.Context
 import androidx.lifecycle.LiveData
 import com.brillante.kotlite.data.local.entity.*
-import com.brillante.kotlite.data.remote.model.detailorder.DetailOrderResponse
 import com.brillante.kotlite.data.remote.model.detailpsg.DetailPsgResponse
 import com.brillante.kotlite.data.remote.model.recomendation.RecommendationRequest
 import com.brillante.kotlite.preferences.SessionManager

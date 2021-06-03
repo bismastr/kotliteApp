@@ -80,4 +80,17 @@
     <string name="arriving">Arriving</string>
     <string name="your_driver_will_depart_at">Your Driver will Depart at</string>
     <string name="driver_status">Driver Status</string>
+    <string name="set_pickup_location">Set Pickup Location</string>
+    <string name="set_your_destination">Set your Destination</string>
+    <string name="choose_time">Choose Time</string>
+    <string name="estimate_pickup_time">Estimate Pickup Time</string>
+    <string name="choose_date">Choose Date</string>
+    <string name="_7_may">7 May</string>
+    <string name="_07_00">07:00</string>
+    <string name="when_you_will_go">When you will go?</string>
+    <string name="recommendation_list">Recommendation List</string>
+    <string name="here_s_driver_that_have_the_same_route_with_you">Here\'s driver that have the same route with you!</string>
+    <string name="dummy_date">24 May 2021 23:00 WIB</string>
+    <string name="direction">Direction</string>
+    <string name="car_capacity">Car Capacity</string>
 </resources>

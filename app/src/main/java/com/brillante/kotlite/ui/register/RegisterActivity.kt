@@ -1,8 +1,8 @@
 package com.brillante.kotlite.ui.register
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.brillante.kotlite.databinding.ActivityRegisterBinding
 import com.brillante.kotlite.ui.login.LoginActivity
 import com.brillante.kotlite.ui.role.RoleActivity

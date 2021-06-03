@@ -1,12 +1,10 @@
 package com.brillante.kotlite.ui.driver.info
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
-import com.brillante.kotlite.R
+import androidx.appcompat.app.AppCompatActivity
 import com.brillante.kotlite.databinding.ActivityDriverInfoBinding
-import com.brillante.kotlite.databinding.ActivityRoleBinding
 import com.brillante.kotlite.ui.main.MapsActivity
 
 class DriverInfoActivity : AppCompatActivity() {

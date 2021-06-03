@@ -1,7 +1,6 @@
 package com.brillante.kotlite.ui.passenger.driverList
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.brillante.kotlite.data.Repository
 import com.brillante.kotlite.data.local.entity.CreatePsgEntity

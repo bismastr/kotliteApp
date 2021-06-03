@@ -9,8 +9,8 @@ class DriverListViewHolder(private val binding: ItemDriverBinding): RecyclerView
     val btnChoose = binding.btnChoose
 
     fun bind(element: RecommendationsItemEntity){
-        val capacity = element.capacity
-        val totalPsg = element.totalPsg
+        val capacity = element.totalPsg
+        val totalPsg = element.capacity
         val totalCapacity = "$capacity / $totalPsg"
 
         binding.tvCapacity.text = totalCapacity

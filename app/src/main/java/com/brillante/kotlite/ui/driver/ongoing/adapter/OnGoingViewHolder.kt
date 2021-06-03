@@ -10,6 +10,7 @@ class OnGoingViewHolder(private val binding: ItemPsgOnGoingBinding) :
     val btnStartRide = binding.btnStartRide
     val btnCompleteRide = binding.btnCompleteRide
     val btnDone = binding.btnDone
+    val btnDirection = binding.btnDirection
     fun bind(element: PassengerListEntity) {
         binding.tvPsgDate.text = element.time
         binding.tvPsgName.text = element.firstName

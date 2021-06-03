@@ -36,6 +36,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
     private var isCanceled: Boolean = true
     private lateinit var binding: ActivityMapsBinding
 
+
+
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -91,19 +93,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         // Initialize the SDK
         Places.initialize(applicationContext, BuildConfig.API_KEY)
 
-//        binding.navView.selectedItemId = R.id.navigation_home
-//
-//        binding.navView.setOnNavigationItemSelectedListener {
-//            when(it.itemId) {
-//                R.id.navigation_home -> true
-//                R.id.navigation_profile -> {
-//                    startActivity(Intent(this, ProfileActivity::class.java))
-//                    overridePendingTransition(0, 0)
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

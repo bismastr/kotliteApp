@@ -1,7 +1,7 @@
 package com.brillante.kotlite.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.brillante.kotlite.R
 
 class AccountActivity : AppCompatActivity() {
