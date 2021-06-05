@@ -54,27 +54,22 @@ interface ApiService {
         @Body request: RecommendationRequest,
         @Header("Authorization") authHeader: String
     ): Call<RecommendationResponse>
-
     @POST("/passengers/createpsg/{id}/")
     fun createPsg(
         @Body request: CreatePsgRequest,
         @Header("Authorization") authHeader: String,
         @Path("id") id: Int
     ): Call<CreatePsgResponse>
-
     @GET("/passengers/detail/{psgId}/")
     fun getDetailPsg(@Path("psgId") orderId: Int, @Header("Authorization") authHeader: String): Call<DetailPsgResponse>
 
     //patch status passenger
     @PATCH("/passengers/arrived/{id}/")
     fun patchPsgArrived(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
-
     @PATCH("/passengers/startride/{id}/")
     fun patchPsgStartRide(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
-
     @PATCH("/passengers/completeride/{id}/")
     fun patchPsgCompleteRide(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
-
     @PATCH("/passengers/done/{id}/")
     fun patchPsgDone(@Path("id") id: Int, @Header("Authorization") authHeader: String): Call<PatchResponse>
 

@@ -199,7 +199,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_denied"
-                android:layout_width="165dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/primaryDarkColor"
@@ -214,7 +214,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_acc"
-                android:layout_width="165dp"
+                android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:backgroundTint="@color/secondaryColor"

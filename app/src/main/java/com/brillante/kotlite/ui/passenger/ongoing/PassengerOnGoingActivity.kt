@@ -1,6 +1,7 @@
 package com.brillante.kotlite.ui.passenger.ongoing
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Location
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.MapViewModel
 import com.brillante.kotlite.ui.driver.invoce.DriverInvoiceViewModel
 import com.brillante.kotlite.ui.main.MapsActivity
+import com.brillante.kotlite.ui.passenger.invoice.PsgInvoiceActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
@@ -216,7 +218,9 @@ class PassengerOnGoingActivity : AppCompatActivity(), OnMapReadyCallback {
     }
 
     private fun dialogDone() {
-
+        val intent = Intent(this, PsgInvoiceActivity::class.java)
+        intent.putExtra("psgId", psgId)
+        startActivity(intent)
     }
 
     override fun onMapReady(p0: GoogleMap) {
