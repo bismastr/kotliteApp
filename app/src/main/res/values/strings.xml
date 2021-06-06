@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">kotlite</string>
+    <string name="app_name">KotLite</string>
     <string name="title_activity_maps">Map</string>
     <string name="welcome">Welcome To Kotlite</string>
     <string name="title_home">Home</string>
@@ -57,7 +57,6 @@
     <string name="dummy_cartype">Jazz</string>
     <string name="dot">dot</string>
     <string name="dummy_distance">4km</string>
-    <string name="distance">Distance</string>
     <string name="fee">Fee</string>
     <string name="dummy_fee">12,000</string>
     <string name="call">Call</string>
@@ -93,4 +92,6 @@
     <string name="dummy_date">24 May 2021 23:00 WIB</string>
     <string name="direction">Direction</string>
     <string name="car_capacity">Car Capacity</string>
+    <string name="distance">Distance</string>
+    <string name="time_taken">Time Taken</string>
 </resources>

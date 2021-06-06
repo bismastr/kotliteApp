@@ -53,7 +53,7 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="32dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/car_type"
+        android:text="@string/distance"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_income" />
 
@@ -64,7 +64,7 @@
         android:layout_marginStart="88dp"
         android:layout_marginTop="16dp"
         android:fontFamily="@font/roboto"
-        android:text="@string/passanger"
+        android:text="@string/time_taken"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
 

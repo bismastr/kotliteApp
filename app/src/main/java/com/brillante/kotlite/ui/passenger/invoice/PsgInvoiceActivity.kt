@@ -1,5 +1,6 @@
 package com.brillante.kotlite.ui.passenger.invoice
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import com.brillante.kotlite.databinding.ActivityDriverInvoiceBinding
 import com.brillante.kotlite.databinding.ActivityPsgInvoiceBinding
 import com.brillante.kotlite.preferences.SessionManager
 import com.brillante.kotlite.ui.passenger.ongoing.PsgOnGoingViewModel
+import com.brillante.kotlite.ui.role.RoleActivity
 import com.brillante.kotlite.viewmodel.ViewModelFactory
 
 class PsgInvoiceActivity : AppCompatActivity() {
@@ -34,6 +36,11 @@ class PsgInvoiceActivity : AppCompatActivity() {
         //get intent
         psgId = intent.getIntExtra("psgId", 0)
 
+        binding.btnFinishRide.setOnClickListener {
+            val intent = Intent(this, RoleActivity::class.java)
+            startActivity(intent)
+        }
+
         getData()
 
     }
@@ -50,10 +57,12 @@ class PsgInvoiceActivity : AppCompatActivity() {
     private fun setData(psg: DetailPsgResponse){
         val fistName = "Good job, ${psg.firstName}"
         val income = "Rp. ${psg.fee}"
+        val distance = psg.distance/1000
+        val timeTaken = psg.timeTaken/60
         binding.tvNameDriver.text = fistName
         binding.tvIncome.text = income
-        binding.tvCartype.text = psg.distance.toString()
-        binding.tvPassenger.text = psg.timeTaken.toString()
+        binding.tvCartype.text = distance.toString()
+        binding.tvPassenger.text = timeTaken.toString()
         binding.tvTime.text = psg.time
     }
 }
