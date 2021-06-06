@@ -8,6 +8,6 @@ import com.brillante.kotlite.data.local.entity.DetailDriverEntity
 class DriverInvoiceViewModel(private val repository: Repository) : ViewModel() {
 
     fun getDetailDriver(orderId: Int, authHeader: String): LiveData<DetailDriverEntity> {
-        return repository.getDetailDriver(orderId = 7, authHeader)
+        return repository.getDetailDriver(orderId , authHeader)
     }
 }

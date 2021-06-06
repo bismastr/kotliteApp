@@ -118,20 +118,8 @@ class RemoteDataSource {
                     val data = response.body()
                     if (data != null) {
                         callback.onOrderReceived(data)
-                        Toast.makeText(
-                            context,
-                            "Order Success",
-                            Toast.LENGTH_SHORT
-                        ).show()
                     } else Log.d("ORDER", "NULL")
-
-
                 } else {
-                    Toast.makeText(
-                        context,
-                        response.code().toString(),
-                        Toast.LENGTH_SHORT
-                    ).show()
                     Log.d("ORDER", response.code().toString())
                 }
             }

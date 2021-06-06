@@ -8,11 +8,11 @@ import com.brillante.kotlite.data.local.entity.PassengerListEntity
 class PassengerListViewModel(private val repository: Repository) : ViewModel() {
 
     fun getPsgList(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>> {
-        return repository.getPsgList(7, authHeader)
+        return repository.getPsgList(orderId, authHeader)
     }
 
     fun getAccListPsg(orderId: Int, authHeader: String): LiveData<List<PassengerListEntity>> {
-        return repository.getAccPsgList(7, authHeader)
+        return repository.getAccPsgList(orderId, authHeader)
     }
 
     fun patchAccPsg(id: Int, authHeader: String): LiveData<Boolean> {

@@ -61,8 +61,8 @@ class PsgInvoiceActivity : AppCompatActivity() {
         val timeTaken = psg.timeTaken/60
         binding.tvNameDriver.text = fistName
         binding.tvIncome.text = income
-        binding.tvCartype.text = distance.toString()
-        binding.tvPassenger.text = timeTaken.toString()
+        binding.tvCartype.text = "$distance Km"
+        binding.tvPassenger.text = "$timeTaken Minutes"
         binding.tvTime.text = psg.time
     }
 }

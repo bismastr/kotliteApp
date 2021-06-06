@@ -6,7 +6,6 @@ import android.location.Location
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -35,8 +34,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
     private var map: GoogleMap? = null
     private var isCanceled: Boolean = true
     private lateinit var binding: ActivityMapsBinding
-
-
 
     // The entry point to the Fused Location Provider.
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -111,7 +108,7 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
             val autocompleteFragment =
                 supportFragmentManager.findFragmentById(R.id.autocomplete_fragment)
                         as AutocompleteSupportFragment
-            autocompleteFragment.setHint("Mau Kemana Hari Ini?")
+            autocompleteFragment.setHint("Where do you wanna go?")
             autocompleteFragment.setTypeFilter(TypeFilter.ESTABLISHMENT)
             autocompleteFragment.setCountries("ID")
             // Specify the types of place data to return.
@@ -258,7 +255,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback, GoogleMap.OnCamera
         if (!isCanceled) {
 
             map?.setOnCameraIdleListener(this@MapsActivity)
-            Toast.makeText(applicationContext, center.toString(), Toast.LENGTH_LONG).show()
             binding.imgMarker.visibility = View.VISIBLE
             binding.btnSetlocation.visibility = View.VISIBLE
 
