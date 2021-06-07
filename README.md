@@ -44,7 +44,7 @@
     <a href="https://github.com/dzaarsyd/B21-CAP0176"><strong>Explore the Projects »</strong></a>
     <br />
     <br />
-    <a href="#">APK Demo</a>
+    <a href="https://storage.googleapis.com/proud-lamp-312513/Kotlite.apk" target="_blank">APK Demo</a>
     ·
     <a href="https://github.com/bismastr/kotliteApp/issues">Report Bug</a>
     ·
