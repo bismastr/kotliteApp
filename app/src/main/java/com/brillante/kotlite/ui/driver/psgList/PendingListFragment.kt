@@ -67,15 +67,20 @@ class PendingListFragment : BottomSheetDialogFragment() {
     private fun setOnClickCallback() {
         adapterPsgList.setOnItemCLickCallback(object : PsgListAdapter.OnClickCallback {
             override fun onAccClicked(data: PassengerListEntity, position: Int) {
-                passengerListViewModel.patchAccPsg(data.id, authHeader)
-                adapterPsgList.dataList.removeAt(position)
-                adapterPsgList.notifyItemRemoved(position)
-                adapterPsgList.notifyItemRangeChanged(position, adapterPsgList.dataList.size)
-                onStatusPatch?.invoke(Status.ACCEPTED)
+                passengerListViewModel.patchAccPsg(data.id, authHeader).observe(viewLifecycleOwner, {Patch ->
+                    if (Patch != false){
+                        adapterPsgList.dataList.removeAt(position)
+                        adapterPsgList.notifyItemRemoved(position)
+                        adapterPsgList.notifyItemRangeChanged(position, adapterPsgList.dataList.size)
+                        onStatusPatch?.invoke(Status.ACCEPTED)
+                    }
+                })
+
             }
 
             override fun onDeniedClicked(data: PassengerListEntity, position: Int) {
-                Toast.makeText(requireContext(), "DENIED CLICKED", Toast.LENGTH_SHORT).show()
+                adapterPsgList.dataList.removeAt(position)
+                adapterPsgList.notifyItemRemoved(position)
                 onStatusPatch?.invoke(Status.DENIED)
             }
 

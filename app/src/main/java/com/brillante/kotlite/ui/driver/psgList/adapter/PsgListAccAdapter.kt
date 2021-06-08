@@ -15,7 +15,6 @@ class PsgListAccAdapter: RecyclerView.Adapter<PsgListAccViewHolder>() {
     fun setData(data: ArrayList<PassengerListEntity>){
         dataList.clear()
         dataList.addAll(data)
-        Log.d("DATA", data.toString())
         notifyDataSetChanged()
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PsgListAccViewHolder {
